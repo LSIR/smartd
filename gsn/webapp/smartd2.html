@@ -1,0 +1,462 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>SmartD Second</title>
+	
+	
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/variables.less"> 
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/bootswatch.less"> 
+	<script src="js/less.js"  type="text/javascript"></script>
+	
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.min.css" type="text/css" />
+	
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery-tooltip.js"></script>
+	
+
+
+<script type="text/javascript">
+	
+	function change(){
+		
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px',            
+            backgroundColor: '#87CEEB', 
+            color: '#000000',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+             
+        } }); 
+		
+		var weekDay = document.forms["secondForm"]["select-weekDay"].value;					
+		var season = document.forms["secondForm"]["select-season"].value;
+		
+		$("form#firstForm :input").each(function(){
+		
+ 				$(this).prop('checked', false); 
+		});
+		
+		var chosenQuestionContainer = $("#chosen-questions");
+		  				chosenQuestionContainer.empty();
+		  				
+		$.ajax({			  
+			
+		  	type: "GET",	
+		  	url:"/gsn?REQUEST=121&day="+weekDay+"&season="+season,	
+		  	dataType: "xml",
+		  	success:function(xml){			
+		  				  		
+		  		$(xml).find('stream-element').each(function(){	  		
+		  			
+		  			var question1 = $(this).find('field[name="Question1"]').text();
+		  			var question2 = $(this).find('field[name="Question2"]').text();
+		  			var question3 = $(this).find('field[name="Question3"]').text();
+		  			var question4 = $(this).find('field[name="Question4"]').text();
+		  			var question5 = $(this).find('field[name="Question5"]').text();			  			
+		  			
+					$("#"+question1).prop('checked', true);
+					$("#"+question2).prop('checked', true);
+					$("#"+question3).prop('checked', true);
+					$("#"+question4).prop('checked', true); 
+					$("#"+question5).click();
+					
+					$.unblockUI();		  			
+		  			
+		  		});		  		
+		  	}		  		
+		});
+		
+		return false;
+	}
+	
+	
+	$(document).ready(function(){
+				
+	
+	// On the first load the language will be English
+	$.getScript('js/smartd-languages/en.js', function(){		
+		
+		
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title1").innerHTML=lang.title1;
+			document.getElementById("title2").innerHTML=lang.title2;
+			
+			document.getElementById("weekDay").innerHTML=lang.weekDay;
+			document.getElementById("weekDay1").innerHTML=lang.sunday;
+			document.getElementById("weekDay2").innerHTML=lang.monday;
+			document.getElementById("weekDay3").innerHTML=lang.tuesday;
+			document.getElementById("weekDay4").innerHTML=lang.wednesday;
+			document.getElementById("weekDay5").innerHTML=lang.thursday;
+			document.getElementById("weekDay6").innerHTML=lang.friday;
+			document.getElementById("weekDay7").innerHTML=lang.saturday;
+			document.getElementById("weekDay8").innerHTML=lang.weekdays;
+			document.getElementById("weekDay9").innerHTML=lang.weekend;				
+			
+			document.getElementById("season").innerHTML=lang.season;
+			document.getElementById("season1").innerHTML=lang.winter;
+			document.getElementById("season2").innerHTML=lang.spring;
+			document.getElementById("season3").innerHTML=lang.summer;
+			document.getElementById("season4").innerHTML=lang.autumn;
+			
+			document.getElementById("refresh").innerHTML=lang.refreshPlot;
+			
+			document.getElementById("display").innerHTML=lang.displayPlot;
+			
+	});		
+	
+		$.plot($("#placeholder"), [[]]);
+		var questionContainer = $("#questions");
+		
+		$.ajax({			
+		  	type: "GET",	
+		  	url:"/gsn?REQUEST=119&question=all",	
+		  	dataType: "xml",
+		  	success:function(xml){
+		  	
+		  		var qid = "";
+		  		var question = "";		  		
+		  		
+		  		$(xml).find('stream-element').each(function(){	  		
+		  			
+		  			qid = $(this).find('field[name="qid"]').text();
+		  			question = $(this).find('field[name="question"]').text();	
+		  			
+       				questionContainer.append('<input type="checkbox" id="' + qid +
+                               '" ><font style="margin-left: 5px; font-weight:bold; color:LightBlue;">' + question + '</font></input><br/><br/>');
+   					 
+		  		});
+		  		
+		  		questionContainer.find("input").click(questionsAccordingToChoices);
+		  		
+		  		function questionsAccordingToChoices() {
+		  		
+		  					  				
+		  				var chosenQuestionContainer = $("#chosen-questions");
+		  				chosenQuestionContainer.empty();		  		
+		  				questionContainer.find("input:checked").each(function () {		  				
+		// ------------------------------------------------------------------------------------
+		  			
+		  				var id = $(this).attr("id");	  				
+		  				
+		  				$.ajax({
+		  						type: "GET",	
+		  						url:"/gsn?REQUEST=119&name=ireland_survey_question&question="+id,	
+		  						dataType: "xml",
+		  						success:function(xml){
+		  						
+		  								var qid = "";
+		  								var question = "";	
+		  								var x = 0;	  		
+		  		
+		  								$(xml).find('stream-element').each(function(){			  								
+		  													  			
+		  										$.each($(this).find('field'), function() {
+       														 x++;
+    													});
+		  			
+		  										qid = $(this).find('field[name="qid"]').text();
+		  										question = $(this).find('field[name="question"]').text();							
+		  												
+   					 	  						chosenQuestionContainer.append('<p><font style="font-weight:bold; color:LightBlue;">' + question + '</font></p>');  														  														
+  												if(x>2){    													
+    												x = x-2;
+ 													var s = $('<select class="form-control col-lg-12" id="' + qid + 'Q" style="color:black;" /><br/>');
+                              						for(var i=0; i<=x; i++){
+                              							 var answer = $(this).find('field[name= "'+i+'" ]').text();                              							 
+                              							 if(answer)
+                              							 	$("<option />", {value: i, text: answer}).appendTo(s);                    							                              							 
+                              						}
+                              							 
+  												}		 
+                              					else{                              							 
+                              						var s = $('<input style="margin-left: 0px; color:black;" type="text" class="form-control col-lg-12" placeholder="Value" id="' + qid + 'Q" ><br/>');
+ 												}
+                  								chosenQuestionContainer.append($(s));
+		  								});
+		  								
+		  						}
+		  				});
+		  				
+		// ------------------------------------------------------------------------------------
+        			});
+       				
+		  		}
+		 // ------------------------------------------------------------------------------------
+		  	}		     
+		}); 
+			
+	var datasets = [];	
+	var xAxisLabel = [];
+	var lines = 0;
+			
+	$("#secondForm").submit(function(){
+		
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px',            
+            backgroundColor: '#87CEEB', 
+            color: '#000000',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+             
+        } }); 
+	
+		var request = "";	
+		var weekDay = document.forms["secondForm"]["select-weekDay"].value;					
+		var season = document.forms["secondForm"]["select-season"].value;	
+		var isChecked = $('#refreshCheck').is(':checked');
+		request = "&day="+weekDay+"&season="+season+"&questions=";
+		var flag = true;
+		
+		$("select").each(function(){
+			
+			var questionID = $(this).attr("id");
+    		if(questionID!="select-weekDay" && questionID!="select-season"){    		
+    			    		
+    			var option = document.forms["secondForm"][questionID].value;  
+    			request = request + parseInt(questionID) + "," + option + ";";	   			
+    		}
+    		
+		});
+		
+		$("input").each(function(){
+		
+			if($(this).attr("type")=="text"){
+				var questionID = $(this).attr("id");      			    		
+				var option = document.forms["secondForm"][questionID].value; 
+				
+				if(!option){
+					alert("Please set the values!");
+					flag = false;
+					$.unblockUI();
+				}
+				request = request + parseInt(questionID) + "," + option+ ";" ;    		 
+    		}	      		
+		});
+	
+	if(flag){			
+		$.ajax({			
+		  	type: "GET",	
+		  	url:"/gsn?REQUEST=120"+request,	
+		  	dataType: "xml",
+		  	success:function(xml){
+		 	
+		  		var time = "";
+		  		var value = "";	  		  		
+		  		var line = [];
+		  		
+		  		if(!isChecked)
+		  			datasets = [];
+		  		
+		  		$(xml).find('stream-element').each(function(){
+		  		
+		  			
+		  			time = $(this).find('field[name="hour"]').text();
+		  			value = $(this).find('field[name="avg"]').text();
+		  			
+		  			line.push([  time , value ]);	
+		  			xAxisLabel.push([ time , time ]);
+		  			lines++;
+		  		});  		
+		  			
+		  				// var legend = "weekday: "+weekDay+" & season:
+						// "+season;
+		  				
+		  				var JSONObject= {		  				
+		  				// "label": legend,
+		  				"data": line
+		  				};
+		  				
+		  				datasets.push(JSONObject);
+		  				var options = {			
+		  						
+		  						series: {
+								 lines: {
+								 lineWidth: 3
+								 },
+		  						},
+				  				yaxis: { color: "white",min: 0 },				  				
+				  				xaxis: { color: "white",ticks: xAxisLabel},
+				  				/*
+								 * legend:{ //container: $("#chartLegend"),
+								 * //noColumns: lines },
+								 */
+				  		};	
+		  				
+		  		$.unblockUI();		  		
+		  		var plotObj = $.plot( $("#placeholder"), datasets ,options);		  	  
+		    }
+		});
+		
+	}
+		
+	return false;		
+	});		
+	
+	// Selected language = English
+	$("#english").click(function(){	
+		
+		$.getScript('js/smartd-languages/en.js', function()
+		{		
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title1").innerHTML=lang.title1;
+			document.getElementById("title2").innerHTML=lang.title2;
+			
+			document.getElementById("weekDay").innerHTML=lang.weekDay;
+			document.getElementById("weekDay1").innerHTML=lang.sunday;
+			document.getElementById("weekDay2").innerHTML=lang.monday;
+			document.getElementById("weekDay3").innerHTML=lang.tuesday;
+			document.getElementById("weekDay4").innerHTML=lang.wednesday;
+			document.getElementById("weekDay5").innerHTML=lang.thursday;
+			document.getElementById("weekDay6").innerHTML=lang.friday;
+			document.getElementById("weekDay7").innerHTML=lang.saturday;	
+			document.getElementById("weekDay8").innerHTML=lang.weekdays;
+			document.getElementById("weekDay9").innerHTML=lang.weekend;			
+			
+			
+			document.getElementById("season").innerHTML=lang.season;
+			document.getElementById("season1").innerHTML=lang.winter;
+			document.getElementById("season2").innerHTML=lang.spring;
+			document.getElementById("season3").innerHTML=lang.summer;
+			document.getElementById("season4").innerHTML=lang.autumn;
+			
+			document.getElementById("refresh").innerHTML=lang.refreshPlot;
+			
+			document.getElementById("display").innerHTML=lang.displayPlot;
+			
+		});	
+	});
+	
+	// Selected language = French
+	$("#french").click(function(){	
+		alert("french");
+	});
+	
+});
+
+</script>
+
+<style type="text/css">
+#chartLegend .legendLabel { margin-top: 30px; color : white}
+</style>
+
+
+</head>
+<body>
+
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="SmartDindex.html"><font
+						size="14" color="white">SmartD</font></a></li>
+				<li><a  href="smartd1.html"><font id="firstVisualization" size="3"></font></a></li>
+				<li><a  href="smartd2.html"><font id="secondVisualization" size="3"></font></a></li>
+				<li><a  href="smartd3.html"><font id="thirdVisualization" size="3"></font></a></li>
+				<li><a  href="smartd4.html"><font id="fourthVisualization" size="3"></font></a></li>				
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a id="english" href="#">en</a></li>
+				<li><a id="french" href="#">fr</a></li>
+			</ul>
+		</div>
+		<!-- /.nav-collapse -->
+
+	</div>
+	<!-- /.container -->
+	
+	
+		<div class="col-lg-3" style="margin-top: 25px;margin-left: 45px;">
+            <div class="well">
+              <form class="bs-example form-horizontal"  id="secondForm" style="height: 450px; overflow: auto">
+                <fieldset>
+                  <legend><font id="title2" size="3"></font></legend>                 
+                  
+                  <div class="form-group col-lg-12">
+                  <label  id="weekDay" style="color: white; width:45%"></label>
+                  <select class="form-control" id="select-weekDay" name="select-weekDay" style="color:black;" onchange="change();">
+                        <option id="weekDay1" value="sunday"></option>
+                        <option id="weekDay2" value="monday"></option>
+                        <option id="weekDay3" value="tuesday"></option>
+                        <option id="weekDay4" value="wednesday"></option>
+                        <option id="weekDay5" value="thursday"></option>
+                        <option id="weekDay6" value="friday"></option>
+                        <option id="weekDay7" value="saturday"></option>
+                        <option id="weekDay8" value="weekdays"></option>
+                        <option id="weekDay9" value="weekend"></option>
+                  </select>
+                  </div>
+                  
+                  <div class="form-group col-lg-12">
+                  <label  id="season" style="color: white;  width:45%"></label>
+                  <select class="form-control" id="select-season" name="select-season" style="color:black; " onchange="change();">
+                        <option id="season1" value="winter"></option>
+                        <option id="season2" value="spring"></option>
+                        <option id="season3" value="summer"></option>
+                        <option id="season4" value="autumn"></option>
+                  </select>             
+                  </div> 
+                  
+                  <div class="checkbox">                        
+                  <input type="checkbox" name="refresh" id="refreshCheck"><font id="refresh" style="margin-left: 5px; font-weight:bold; color:white;"></font>                        
+                  </div>  
+                  <div><br /></div>
+                  
+                  
+                  <div class="form-group col-lg-12" id="chosen-questions" style="margin-top: 5px"></div>    
+                  
+                    <div class="col-lg-12"> 
+                      <center><button id="display" type="submit" class="btn btn-primary"></button></center> 
+                    </div>
+                  
+                </fieldset>
+              </form>
+            </div>
+          </div>
+	
+          <div class="col-lg-3" style="margin-top: 25px; ">
+            <div class="well">
+              <form class="bs-example form-horizontal"  id="firstForm" style="height: 450px; overflow: auto">
+                <fieldset>
+                  <legend><font id="title1" size="3"></font></legend>
+                  
+                  <div class="form-group col-lg-12" id="questions" style="margin-top: 5px"></div>
+                  
+                  
+                </fieldset>
+              </form>
+            </div>
+          </div>
+			                     
+          <div class="container" id="placeholder" style="width:530px;height:450px; margin-top: 40px; margin-right: 45px;"></div>
+          <center><div id="chartLegend"></div></center>
+     
+     
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.js"></script> 
+ 
+
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.resize.js"></script>
+	
+</body>
+</html>	

@@ -1,0 +1,14 @@
+# generated files
+gsn/bin
+gsn/build
+gsn/logs
+
+# Eclipse project files
+.classpath
+.project
+
+# Misc
+.DS_Store
+.metadata/
+.settings/
+

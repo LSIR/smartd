@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>SmartD First</title>
+	
+	
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/variables.less"> 
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/bootswatch.less"> 
+	<script src="js/less.js"  type="text/javascript"></script>
+	
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.min.css" type="text/css" />
+	
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery-tooltip.js"></script>	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$.plot($("#placeholder"), [[]]);		
+	
+	// On the first load the language will be English		
+	$.getScript('js/smartd-languages/en.js', function()
+		{				
+			
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title").innerHTML=lang.firstControlPanel;
+			document.getElementById("startTime").innerHTML=lang.startTime;
+			document.getElementById("endTime").innerHTML=lang.endTime;
+			
+			document.getElementById("interval").innerHTML=lang.interval;
+			document.getElementById("interval1").innerHTML=lang.everyThirtyMin;
+			document.getElementById("interval2").innerHTML=lang.hourly;
+			document.getElementById("interval3").innerHTML=lang.daily;
+			document.getElementById("interval4").innerHTML=lang.weekly;
+			document.getElementById("interval5").innerHTML=lang.monthly;
+			
+			document.getElementById("intervalAggr1").innerHTML=lang.min;
+			document.getElementById("intervalAggr2").innerHTML=lang.max;
+			document.getElementById("intervalAggr3").innerHTML=lang.sum;
+			document.getElementById("intervalAggr4").innerHTML=lang.avg;
+			
+			document.getElementById("normalization").innerHTML=lang.normalization;
+			document.getElementById("id-label").innerHTML=lang.id;
+			
+			document.getElementById("aggr1").innerHTML=lang.min;
+			document.getElementById("aggr2").innerHTML=lang.max;
+			document.getElementById("aggr3").innerHTML=lang.sum;
+			document.getElementById("aggr4").innerHTML=lang.avg;
+			
+			document.getElementById("displayPlot").innerHTML=lang.displayPlot;
+			document.getElementById("savePlot").innerHTML=lang.savePlot;
+			document.getElementById("loadPlot").innerHTML=lang.loadPlot;
+						
+			
+		});			
+	
+			
+	var datasets = [];
+	var line = [];
+		
+	var maximum = 0.0;
+	var minimum = 0.0;
+	
+	//var button;
+
+	/*$("button").click(function () {
+    	button = $(this).attr("id");
+	});*/
+	
+		//Submit
+	$("#firstForm").submit(function(){
+	
+	
+	/*if(button=="savePlot"){	
+		
+		$.twFile.save(filePath, content);
+	}*/
+	
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px',            
+            backgroundColor: '#87CEEB', 
+            color: '#000000',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+             
+        } }); 
+		
+		datasets = [];
+		maximum = 0.0;
+		minimum = 0.0;
+		
+		function stringToDate(stringDate){
+			
+			parseDateTime = stringDate.split("T");
+  	    	
+  	    	parseDate = parseDateTime[0].split("-");
+  	    	
+  	    	TimeYear = parseDate[0];
+  			TimeMonth = parseDate[1]-1;
+  			TimeDay = parseDate[2]; 			
+  	    	
+  	    	parseTime = parseDateTime[1].split(":");
+  	    	
+  	    	TimeHour = parseTime[0];
+  	    	TimeMinute = parseTime[1];
+  	    	  	    	
+  	    	return Date.UTC(TimeYear,TimeMonth,TimeDay,TimeHour,TimeMinute);  	    	
+		};
+		
+			
+		var vsName = "electric_data";
+		
+		var startTime = document.forms["firstForm"]["start-time"].value;				
+		var endTime = document.forms["firstForm"]["end-time"].value;		
+		var interval = document.forms["firstForm"]["select-interval"].value;		
+		var intervalAggr = document.forms["firstForm"]["select-interval-aggregation"].value;		
+		var isChecked = $('#normalizationCheck').is(':checked');				
+		var ids = document.forms["firstForm"]["id"].value;		
+		var aggrFunction = document.forms["firstForm"]["select-aggregation"].value;
+		
+		var parseLines = ids.split(';');
+		
+		function displayLines(lines){	
+			
+			var userIDs = parseLines[lines];
+							
+			if(lines<parseLines.length)
+				lines++;
+			
+			else
+				return false; 
+			
+			line = [];		
+		
+		
+		$.ajax({
+						
+		  	type: "GET",	
+		  	url:"/gsn?REQUEST=118&name="+vsName+"&ids="+userIDs+"&startTime="+startTime+"&endTime="+endTime+"&interval="+interval+"&normalization="+isChecked+"&aggregation="+aggrFunction+"&intervalAggregation="+intervalAggr,	
+		  	dataType: "xml",
+		  	success:function(xml){
+		  	
+		  		var dateTime = "";
+		  		var value = "";
+		  		var dateTimeToDate;		  		
+		  		
+		  		$(xml).find('stream-element').each(function(){
+		  			
+		  			dateTime = $(this).find('field[name="TIMESTAMP"]').text();
+		  			value = $(this).find('field[name="VALUE"]').text();		  			
+		  			
+		  			dateTimeToDate = stringToDate(dateTime);
+		  			line.push([  dateTimeToDate , value ]);
+		  			
+		  			if (parseFloat(value) > parseFloat(maximum))
+		  				maximum = value;
+		  			else if (parseFloat(value) < parseFloat(minimum))
+		  				minimum = value;
+		  			
+		  		});
+		  		
+		  		var JSONObject= {		  				
+		  				"label": userIDs,
+		  				"data": line
+		  				};
+		  		
+		  		datasets.push(JSONObject);		  		
+		  		if (lines==parseLines.length){
+		  		
+		  		var maxSize = parseFloat(maximum);
+		  		var minSize = parseFloat(minimum);		  		
+		  		
+		  		maxSize = maxSize + maxSize/10 ;
+		  		if(minSize<0.0)
+		  			minSize = minSize + minSize/10 ;
+		  		
+		  		
+		  				var options = {		
+		  				
+		  						series: {
+   									 lines: {
+     									 lineWidth: 3
+   									 },
+   								 },
+		  								  				
+				  				yaxis: { color: "white", min: minSize, max: maxSize },				  				
+				  				xaxis: { color: "white", mode: "time"},
+				  				legend:{      				  		            
+				  		            container: $("#chartLegend"),
+				  		            noColumns: lines
+				  		        }				  				
+				  		};	
+		  				
+		  				$.unblockUI();
+		  				var plotObj = $.plot( $("#placeholder"), datasets  ,options);
+		  		
+		  			}
+		  		else{
+		  			displayLines(lines);
+		  			}
+		  		
+		  		}
+		    
+		     
+		}); 			
+			
+		}
+		
+		displayLines(0);
+			
+		return false;
+		
+	});		
+			
+	
+	
+	//Selected language = English	
+	$("#english").click(function(){	
+		
+		$.getScript('js/smartd-languages/en.js', function()
+		{		
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title").innerHTML=lang.firstControlPanel;
+			
+			document.getElementById("startTime").innerHTML=lang.startTime;
+			document.getElementById("endTime").innerHTML=lang.endTime;
+			
+			document.getElementById("interval").innerHTML=lang.interval;
+			document.getElementById("interval1").innerHTML=lang.everyThirtyMin;
+			document.getElementById("interval2").innerHTML=lang.hourly;
+			document.getElementById("interval3").innerHTML=lang.daily;
+			document.getElementById("interval4").innerHTML=lang.weekly;
+			document.getElementById("interval5").innerHTML=lang.monthly;
+			
+			document.getElementById("intervalAggr1").innerHTML=lang.min;
+			document.getElementById("intervalAggr2").innerHTML=lang.max;
+			document.getElementById("intervalAggr3").innerHTML=lang.sum;
+			document.getElementById("intervalAggr4").innerHTML=lang.avg;
+			
+			document.getElementById("normalization").innerHTML=lang.normalization;
+			document.getElementById("id-label").innerHTML=lang.id;
+						
+			document.getElementById("aggr1").innerHTML=lang.min;
+			document.getElementById("aggr2").innerHTML=lang.max;
+			document.getElementById("aggr3").innerHTML=lang.sum;
+			document.getElementById("aggr4").innerHTML=lang.avg;
+			
+			document.getElementById("displayPlot").innerHTML=lang.displayPlot;
+			document.getElementById("savePlot").innerHTML=lang.savePlot;
+			document.getElementById("loadPlot").innerHTML=lang.loadPlot;
+			
+			
+		});	
+	});
+	
+	//Selected language = French	
+	$("#french").click(function(){
+	
+		alert("french");
+	});
+	
+	
+});
+
+</script>
+
+<style type="text/css">
+    #chartLegend .legendLabel { margin-top: 30px; color : white}
+</style>
+	
+</head>
+<body>
+
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="SmartDindex.html"><font
+						size="14" color="white">SmartD</font></a></li>
+				<li><a  href="smartd1.html"><font id="firstVisualization" size="3"></font></a></li>
+				<li><a  href="smartd2.html"><font id="secondVisualization" size="3"></font></a></li>
+				<li><a  href="smartd3.html"><font id="thirdVisualization" size="3"></font></a></li>
+				<li><a  href="smartd4.html"><font id="fourthVisualization" size="3"></font></a></li>
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a id="english" href="#">en</a></li>
+				<li><a id="french" href="#">fr</a></li>
+			</ul>
+		</div>
+		<!-- /.nav-collapse -->
+
+	</div>
+	<!-- /.container -->
+	
+	
+          <div class="col-lg-4" style="margin-top: 25px; margin-left: 60px;">
+            <div class="well">
+              <form class="bs-example form-horizontal"  id="firstForm">
+                <fieldset>
+                  <legend><font id="title" size="3"></font></legend>
+                  <div class="form-group">
+                    <label id="startTime" style="margin-left: 15px; color:white;"></label>
+                    <br/>
+                    <div class="col-lg-11">
+                      <input min="2009-01-01T00:00" max="2010-12-31T23:59"  style="margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="start-time">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="endTime" style=" margin-left: 15px; color:white;"></label>
+                    <br/>
+                    <div class="col-lg-11">
+                      <input min="2009-01-01T00:00" max="2010-12-31T23:59" style=" margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="end-time">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                  <label id="interval" style="margin-left: 15px; color:white;"></label>
+                  <br/>
+                  <div class="col-lg-11 ">
+                      <select class="form-control col-lg-2" style="width: 75%; color:black;" id="select-interval" name="select-interval">
+                        <option id="interval1" value="30"></option>
+                        <option id="interval2" value="hour"></option>
+                        <option id="interval3" value="day"></option>
+                        <option id="interval4" value="week"></option>
+                        <option id="interval5" value="month"></option>
+                      </select>
+                      
+                      <select class="form-control" style="width: 25%; color:black;" id="select-interval-aggregation" name="select-interval-aggr">
+                        <option id="intervalAggr1" value="min"></option>
+                        <option id="intervalAggr2" value="max"></option>
+                        <option id="intervalAggr3" value="sum"></option>
+                        <option id="intervalAggr4" value="avg"></option>
+                      </select>
+                    </div>                  	
+                      
+                  </div>              
+                                      
+                      <div class="checkbox">                        
+                          <input type="checkbox" name="normalization" id="normalizationCheck"><font id="normalization" style="margin-left: 5px; font-weight:bold; color:white;"></font>                        
+                      </div>  
+                   <div><br /></div>  
+                   
+                   <div class="form-group">
+                    <label id="id-label" style="margin-left: 15px; color:white;"></label>
+                    <br/>
+                   <div class="col-lg-11">
+                      <input class="col-lg-2" style="margin-top: 2px; width: 75%; height:35px; margin-left: 0px; color:black;" type="text" class="form-control" id="id">
+                      
+                      <select class="form-control" style="width: 25%; margin-left: 3px; color:black;"id="select-aggregation" name="select-aggr">
+                        <option id="aggr1" value="min"></option>
+                        <option id="aggr2" value="max"></option>
+                        <option id="aggr3" value="sum"></option>
+                        <option id="aggr4" value="avg"></option>
+                      </select>
+                  </div>
+                    
+                  </div>
+                  
+                  <center>
+                  <div class="form-group">
+                    <div class="col-lg-11">
+                      <button id="displayPlot" value="displayPlot" type="submit" class="btn btn-primary"></button>
+                  <!--      <button id="savePlot" value="savePlot" type="submit" class="btn btn-info"></button>
+               		  <button id="loadPlot" value="loadPlot" type="submit" class="btn btn-warning"></button> -->
+                    </div>
+                  </div>
+                  </center>
+                  
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          
+			
+                   
+          <div class="container" id="placeholder" style=" width:650px; height:450px; margin-top: 50px; margin-right: 100px;"></div>
+     	  <center><div id="chartLegend"></div></center>
+     
+     
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script type="text/javascript" src="js/jQuery.twFile.js"></script>
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.js"></script>  
+
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.resize.js"></script>
+	
+</body>
+</html>	

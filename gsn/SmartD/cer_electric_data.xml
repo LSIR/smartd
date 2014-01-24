@@ -1,0 +1,38 @@
+<virtual-sensor name="electric_data" priority="10">
+	<processing-class>
+		<class-name>gsn.vsensor.BridgeVirtualSensor</class-name>
+		<init-params />
+		<output-structure>
+			<field name="meter_id" type="integer"/>
+			<field name="timestamp" type="integer"/>
+			<field name="value" type="double"/>
+		</output-structure>
+	</processing-class>
+	<description>Reads data from the TXT file</description>
+	<life-cycle pool-size="10" />
+	<addressing>
+		<predicate key="geographical"></predicate>
+		<predicate key="LATITUDE"></predicate>
+		<predicate key="LONGITUDE"></predicate>
+	</addressing>
+	<storage history-size="10000000" />
+	<streams>
+	<stream name="input1">
+		<source alias="source1" sampling-rate="1" storage-size="1">
+			<address wrapper="csv">
+				<predicate key="file">./cer_electric_data_jan-feb-2010_meters-1000-1004.csv</predicate>
+				<predicate key="fields">meter_id,timestamp,value</predicate>
+				<predicate key="formats">numeric,numeric,numeric</predicate>
+				<predicate key="bad-values">999999999, NaN, NA</predicate>
+				<predicate key="timezone">Etc/GMT+0</predicate>
+				<predicate key="sampling">1</predicate>
+         		<predicate key="check-point-directory">csv-check-points-SQL</predicate>
+           		<predicate key="use-counter-for-check-point">true</predicate>
+				<predicate key="separator"> </predicate>
+			</address>
+			<query>select meter_id,timestamp,value from wrapper</query>
+		</source>
+		<query>select meter_id,timestamp,value from source1</query>
+	</stream>
+</streams>
+</virtual-sensor>

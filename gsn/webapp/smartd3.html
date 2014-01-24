@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>SmartD Third</title>
+	
+	
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/variables.less"> 
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/bootswatch.less"> 
+	<script src="js/less.js"  type="text/javascript"></script>
+	
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.min.css" type="text/css" />
+	
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery-tooltip.js"></script>
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+		
+		$.plot($("#placeholder"), [[]]);
+		
+	
+	// On the first load the language will be English		
+	$.getScript('js/smartd-languages/en.js', function()
+		{				
+			
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title3").innerHTML=lang.title3;
+			
+			document.getElementById("season").innerHTML=lang.season;
+			document.getElementById("all").innerHTML=lang.all;
+			document.getElementById("season1").innerHTML=lang.winter;
+			document.getElementById("season2").innerHTML=lang.spring;
+			document.getElementById("season3").innerHTML=lang.summer;
+			document.getElementById("season4").innerHTML=lang.autumn;
+						
+						
+			document.getElementById("evaluation").innerHTML=lang.title3;
+			document.getElementById("neighbor").innerHTML=lang.EvaluationOfnNeighbors;
+			document.getElementById("question").innerHTML=lang.EvaluationOfkQuestions;	
+			
+			document.getElementById("neighborNumber").innerHTML=lang.neighborNum;
+			document.getElementById("questionNumber").innerHTML=lang.questionNum;
+					
+			document.getElementById("display").innerHTML=lang.displayPlot;			
+			
+		});			
+	
+			
+		//Submit
+	$("#thirdForm").submit(function(){
+	
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px',            
+            backgroundColor: '#87CEEB', 
+            color: '#000000',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+             
+        } }); 
+		
+		var season = document.forms["thirdForm"]["select-season"].value;		
+		var evaluation = document.forms["thirdForm"]["select-evaluation"].value;
+		
+		var neighborNum = document.forms["thirdForm"]["select-neighborNum"].value;
+		var questionNum = document.forms["thirdForm"]["select-questionNum"].value;
+		
+		var request = "";	
+		
+		if(evaluation=="question"){		
+			request = "REQUEST=123&season="+season;
+		}
+		else if(evaluation=="neighbor"){		
+			request = "REQUEST=122&season="+season;		
+		}			
+		
+		var line = [];		
+		var xAxisLabel = [];
+		
+		$.ajax({
+			
+		  	type: "GET",	
+		  	url:"/gsn?"+request+"&neighborNum="+neighborNum+"&questionNum="+questionNum,	
+		  	dataType: "xml",
+		  	success:function(xml){
+		 	
+		  		var number = "";
+		  		var distance = "";
+		  		
+		  		$(xml).find('stream-element').each(function(){		  		
+		  			
+		  			number = $(this).find('field[name="Number"]').text();
+		  			distance = $(this).find('field[name="Distance"]').text();		  			
+		  			line.push([  number , distance ]);	
+		  			xAxisLabel.push([ number , number ]);
+		  			
+		  		});	
+		  		
+		  				var options = {		
+		  				
+		  						series: {
+   									 lines: {
+     									 lineWidth: 3
+   									 },
+   								 },		  				
+				  				yaxis: { color: "white",min: 0 },				  				
+				  				xaxis: { color: "white",ticks: xAxisLabel},
+				  		};	
+		  		
+		  		$.unblockUI();		  		
+		  		var plotObj = $.plot( $("#placeholder"), [{ data: line }] , options);
+		    }		    
+		     
+		});
+			
+		return false;
+		
+	});		
+			
+	
+	//Selected language = English	
+	$("#english").click(function(){	
+		
+		$.getScript('js/smartd-languages/en.js', function()
+		{		
+							
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title3").innerHTML=lang.title3;
+			
+			document.getElementById("season").innerHTML=lang.season;
+			document.getElementById("all").innerHTML=lang.all;
+			document.getElementById("season1").innerHTML=lang.winter;
+			document.getElementById("season2").innerHTML=lang.spring;
+			document.getElementById("season3").innerHTML=lang.summer;
+			document.getElementById("season4").innerHTML=lang.autumn;
+			
+			document.getElementById("evaluation").innerHTML=lang.title3;
+			document.getElementById("neighbor").innerHTML=lang.EvaluationOfnNeighbors;
+			document.getElementById("question").innerHTML=lang.EvaluationOfkQuestions;		
+			
+			document.getElementById("neighborNumber").innerHTML=lang.neighborNum;
+			document.getElementById("questionNumber").innerHTML=lang.questionNum;	
+			
+			document.getElementById("display").innerHTML=lang.displayPlot;				
+			
+			
+		});	
+	});
+	
+	//Selected language = French	
+	$("#french").click(function(){
+	
+		alert("french");
+	});
+	
+});
+
+</script>
+</head>
+<body>
+
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="SmartDindex.html"><font
+						size="14" color="white">SmartD</font></a></li>
+				<li><a  href="smartd1.html"><font id="firstVisualization" size="3"></font></a></li>
+				<li><a  href="smartd2.html"><font id="secondVisualization" size="3"></font></a></li>
+				<li><a  href="smartd3.html"><font id="thirdVisualization" size="3"></font></a></li>
+				<li><a  href="smartd4.html"><font id="fourthVisualization" size="3"></font></a></li>
+
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a id="english" href="#">en</a></li>
+				<li><a id="french" href="#">fr</a></li>
+			</ul>
+		</div>
+		<!-- /.nav-collapse -->
+
+	</div>
+	<!-- /.container -->
+	
+	
+          <div class="col-lg-4" style="margin-top: 25px; margin-left: 60px;">
+            <div class="well">
+              <form class="bs-example form-horizontal"  id="thirdForm">
+                <fieldset>
+                  <legend><font id="title3" size="3"></font></legend>                  
+                                    
+                  <div class="form-group col-lg-12">
+                  <label  id="season" style="color:white;"></label>
+                  <select class="form-control " id="select-season" name="select-season" style=" color:black;">
+                        <option id="all" value="all"></option>
+                        <option id="season1" value="winter"></option>
+                        <option id="season2" value="spring"></option>
+                        <option id="season3" value="summer"></option>
+                        <option id="season4" value="autumn"></option>
+                  </select>
+                  </div>
+                  
+                  <div class="form-group col-lg-12">
+                  <label  id="evaluation" style="color:white;"></label>
+                  <select class="form-control " id="select-evaluation" name="select-evaluation" style=" color:black;">
+                       	<option id="neighbor" value="neighbor"></option>
+                        <option id="question" value="question"></option>
+                  </select>
+                  </div>   
+                  
+                  <div class="form-group col-lg-12">
+                  <label  id="neighborNumber" style="color:white; "></label>
+                  <select class="form-control  " id="select-neighborNum" name="select-neighborNum" style=" color:black;">
+                        <option id="10" value="10">10</option>
+                        <option id="20" value="20">20</option>
+                        <option id="30" value="30">30</option>
+                        <option id="40" value="40">40</option>
+                        <option id="50" value="50">50</option>
+                  </select>
+                  </div>   
+                  
+                  <div class="form-group col-lg-12">
+                  <label  id="questionNumber" style="color:white; "></label>
+                  <select class="form-control  " id="select-questionNum" name="select-questionNum" style=" color:black;">
+                        <option id="10" value="10">10</option>
+                        <option id="20" value="20">20</option>
+                        <option id="30" value="30">30</option>
+                        <option id="40" value="40">40</option>
+                        <option id="50" value="50">50</option>
+                  </select>
+                  </div>                                     
+                  
+                    <div class="col-lg-11"> 
+                      <center><button id="display" type="submit" class="btn btn-primary"></button></center> 
+                    </div>
+                  
+                </fieldset>
+              </form>
+            </div>
+          </div>
+                     
+          <div class="container" id="placeholder" style="width:650px;height:450px; margin-top: 40px; margin-right: 100px;"></div>
+     	  
+     
+     
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.js"></script> 
+
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/excanvas.min.js"></script>
+	
+</body>
+</html>	

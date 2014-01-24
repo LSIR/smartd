@@ -1,0 +1,408 @@
+This is pdfTeX, Version 3.1415926-1.40.10 (MiKTeX 2.8) (preloaded format=pdflatex 2013.10.12)  17 JAN 2014 22:19
+entering extended mode
+**http*queries.tex
+
+("C:\Users\Elin\Desktop\web-interface server side processing - http queries\htt
+p queries.tex"
+LaTeX2e <2009/09/24>
+Babel <v3.8l> and hyphenation patterns for english, dumylang, nohyphenation, ge
+rman, ngerman, german-x-2009-06-19, ngerman-x-2009-06-19, french, loaded.
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\base\article.cls"
+Document Class: article 2007/10/19 v1.4h Standard LaTeX document class
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\base\size12.clo"
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count79
+\c@section=\count80
+\c@subsection=\count81
+\c@subsubsection=\count82
+\c@paragraph=\count83
+\c@subparagraph=\count84
+\c@figure=\count85
+\c@table=\count86
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\ams\math\amsmath.sty"
+Package: amsmath 2000/07/18 v2.13 AMS math features
+\@mathmargin=\skip43
+
+For additional information on amsmath, use the `?' option.
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\ams\math\amstext.sty"
+Package: amstext 2000/06/29 v2.01
+
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\ams\math\amsgen.sty"
+File: amsgen.sty 1999/11/30 v2.0
+\@emptytoks=\toks14
+\ex@=\dimen103
+))
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\ams\math\amsbsy.sty"
+Package: amsbsy 1999/11/29 v1.2d
+\pmbraise@=\dimen104
+)
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\ams\math\amsopn.sty"
+Package: amsopn 1999/12/14 v2.01 operator names
+)
+\inf@bad=\count87
+LaTeX Info: Redefining \frac on input line 211.
+\uproot@=\count88
+\leftroot@=\count89
+LaTeX Info: Redefining \overline on input line 307.
+\classnum@=\count90
+\DOTSCASE@=\count91
+LaTeX Info: Redefining \ldots on input line 379.
+LaTeX Info: Redefining \dots on input line 382.
+LaTeX Info: Redefining \cdots on input line 467.
+\Mathstrutbox@=\box26
+\strutbox@=\box27
+\big@size=\dimen105
+LaTeX Font Info:    Redeclaring font encoding OML on input line 567.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 568.
+\macc@depth=\count92
+\c@MaxMatrixCols=\count93
+\dotsspace@=\muskip10
+\c@parentequation=\count94
+\dspbrk@lvl=\count95
+\tag@help=\toks15
+\row@=\count96
+\column@=\count97
+\maxfields@=\count98
+\andhelp@=\toks16
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks17
+\multlinegap=\skip44
+\multlinetaggap=\skip45
+\mathdisplay@stack=\toks18
+LaTeX Info: Redefining \[ on input line 2666.
+LaTeX Info: Redefining \] on input line 2667.
+)
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\graphics\graphicx.sty"
+Package: graphicx 1999/02/16 v1.0f Enhanced LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\graphics\keyval.sty"
+Package: keyval 1999/03/16 v1.13 key=value parser (DPC)
+\KV@toks@=\toks19
+)
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\graphics\graphics.sty"
+Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\graphics\trig.sty"
+Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
+)
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\00miktex\graphics.cfg"
+File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
+)
+Package graphics Info: Driver file: pdftex.def on input line 91.
+
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\pdftex-def\pdftex.def"
+File: pdftex.def 2010/02/14 v0.04n Graphics/color for pdfTeX
+\Gread@gobject=\count99
+))
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
+)
+("C:\Users\Elin\Desktop\web-interface server side processing - http queries\htt
+p queries.aux")
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 4.
+LaTeX Font Info:    ... okay on input line 4.
+
+("C:\Program Files (x86)\MiKTeX 2.8\tex\context\base\supp-pdf.tex"
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count100
+\scratchdimen=\dimen114
+\scratchbox=\box28
+\nofMPsegments=\count101
+\nofMParguments=\count102
+\everyMPshowfont=\toks20
+\MPscratchCnt=\count103
+\MPscratchDim=\dimen115
+\MPnumerator=\count104
+\everyMPtoPDFconversion=\toks21
+)
+Overfull \hbox (50.2422pt too wide) in paragraph at lines 7--8
+\OT1/cmr/m/n/12 been pro-vided. Each of these re-quest han-dlers im-ple-ments t
+he gsn.http.RequestHandler
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 11.
+("C:\Program Files (x86)\MiKTeX 2.8\tex\latex\base\omscmr.fd"
+File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 11.
+
+Overfull \hbox (81.11703pt too wide) in paragraph at lines 22--23
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD (http://localhost:22001/gsn?REQUEST=118&name
+=electric[]data) 
+ []
+
+
+Overfull \hbox (7.23755pt too wide) in paragraph at lines 26--27
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DChartHandler.
+ []
+
+[1
+
+{C:/ProgramData/MiKTeX/2.8/pdftex/config/pdftex.map}]
+Underfull \hbox (badness 10000) in paragraph at lines 38--39
+
+ []
+
+
+Overfull \hbox (47.69214pt too wide) in paragraph at lines 40--44
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=118&name=electric[]data&id
+s=1002,1018
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 40--44
+
+ []
+
+<REQUEST_SMARTD.JPG, id=9, 395.97937pt x 417.05812pt>
+File: REQUEST_SMARTD.JPG Graphic file (type jpg)
+ <use REQUEST_SMARTD.JPG>
+Overfull \hbox (5.97841pt too wide) in paragraph at lines 49--50
+ [][] 
+ []
+
+
+Overfull \hbox (19.367pt too wide) in paragraph at lines 55--56
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]QUESTION (http://localhost:22001/gsn?REQUES
+T=119) 
+ []
+
+
+Overfull \hbox (22.96933pt too wide) in paragraph at lines 59--60
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DQuestionHandler.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 65--66
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 67--68
+
+ []
+
+<REQUEST_SMARTD_QUESTION.JPG, id=10, 515.67656pt x 137.01187pt>
+File: REQUEST_SMARTD_QUESTION.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_QUESTION.JPG>
+Overfull \hbox (125.6753pt too wide) in paragraph at lines 73--74
+ [][] 
+ []
+
+
+Overfull \hbox (31.71701pt too wide) in paragraph at lines 81--82
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]SIMILARITY (http://localhost:22001/gsn?REQU
+EST=120) 
+ []
+
+
+Overfull \hbox (27.47345pt too wide) in paragraph at lines 85--86
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DSimilarityHandler.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+
+ []
+
+[2]
+Overfull \hbox (21.00687pt too wide) in paragraph at lines 93--94
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=120&questions=1,1;60,2;5,1
+;3,2;34,1 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
+
+ []
+
+<REQUEST_SMARTD_SIMILARITY.JPG, id=14, 344.03531pt x 431.36156pt>
+File: REQUEST_SMARTD_SIMILARITY.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_SIMILARITY.JPG>
+Overfull \hbox (79.38803pt too wide) in paragraph at lines 106--107
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]QUESTION[]SELECTION (http://localhost:22001
+/gsn?REQUEST=121) 
+ []
+
+[3 <C:/Users/Elin/Desktop/web-interface server side processing - http queries/R
+EQUEST_SMARTD.JPG>]
+Overfull \hbox (27.86928pt too wide) in paragraph at lines 110--111
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DQuestionSelection.
+ []
+
+
+Overfull \hbox (20.98462pt too wide) in paragraph at lines 113--114
+[]\OT1/cmr/m/n/12 day : sun-day,monday,tuesday,wednesday,thursday,friday,saturd
+ay,weekdays
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 117--118
+
+ []
+
+
+Overfull \hbox (18.46106pt too wide) in paragraph at lines 119--120
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=121&day=weekdays&season=wi
+nte 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 119--120
+
+ []
+
+<REQUEST_SMARTD_QUESTION_SELECTION.JPG, id=18, 298.86656pt x 157.33781pt>
+File: REQUEST_SMARTD_QUESTION_SELECTION.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_QUESTION_SELECTION.JPG>
+Overfull \hbox (108.53404pt too wide) in paragraph at lines 132--133
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]NEIGHBOR[]NUM[]EVALUATION (http://localhost
+:22001/gsn?REQUEST=122) 
+ []
+
+
+Overfull \hbox (63.5328pt too wide) in paragraph at lines 136--137
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DNeighborNumEvaluation.
+ []
+
+[4 <C:/Users/Elin/Desktop/web-interface server side processing - http queries/R
+EQUEST_SMARTD_QUESTION.JPG>] [5 <C:/Users/Elin/Desktop/web-interface server sid
+e processing - http queries/REQUEST_SMARTD_SIMILARITY.JPG>]
+Underfull \hbox (badness 10000) in paragraph at lines 144--145
+
+ []
+
+
+Overfull \hbox (52.91904pt too wide) in paragraph at lines 146--147
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=122&neighborNum=20&questio
+nNum=10 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 146--147
+
+ []
+
+<REQUEST_SMARTD_NEIGHBOR_NUM_EVALUATION.JPG, id=25, 368.1253pt x 432.11438pt>
+File: REQUEST_SMARTD_NEIGHBOR_NUM_EVALUATION.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_NEIGHBOR_NUM_EVALUATION.JPG>
+Overfull \hbox (108.53404pt too wide) in paragraph at lines 159--160
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]QUESTION[]NUM[]EVALUATION (http://localhost
+:22001/gsn?REQUEST=123) 
+ []
+
+
+Overfull \hbox (59.35924pt too wide) in paragraph at lines 163--164
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DQuestionNumEvaluaton.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 171--172
+
+ []
+
+
+Overfull \hbox (52.91904pt too wide) in paragraph at lines 173--174
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=123&neighborNum=20&questio
+nNum=10 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 173--174
+
+ []
+
+
+<REQUEST_SMARTD_QUESTION_NUM_EVALUATION.JPG, id=26, 368.87813pt x 429.10312pt>
+File: REQUEST_SMARTD_QUESTION_NUM_EVALUATION.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_QUESTION_NUM_EVALUATION.JPG>
+Overfull \hbox (79.38803pt too wide) in paragraph at lines 185--186
+[]\OT1/cmtt/m/n/12 REQUEST[]SMARTD[]VALUE[]DISTRIBUTION (http://localhost:22001
+/gsn?REQUEST=124) 
+ []
+
+[6 <C:/Users/Elin/Desktop/web-interface server side processing - http queries/R
+EQUEST_SMARTD_QUESTION_SELECTION.JPG>] [7 <C:/Users/Elin/Desktop/web-interface 
+server side processing - http queries/REQUEST_SMARTD_NEIGHBOR_NUM_EVALUATION.JP
+G>] [8 <C:/Users/Elin/Desktop/web-interface server side processing - http queri
+es/REQUEST_SMARTD_QUESTION_NUM_EVALUATION.JPG>]
+Overfull \hbox (27.37346pt too wide) in paragraph at lines 189--190
+[]\OT1/cmr/m/n/12 This re-quest is han-dled by the class gsn.vsensor.http.Smart
+DValueDistribution.
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 199--200
+
+ []
+
+
+Overfull \hbox (105.47543pt too wide) in paragraph at lines 201--202
+[]\OT1/cmr/m/n/12 http://localhost:22001/gsn?REQUEST=124&startTime=2009-07-19T0
+1:00&endTime=2009-
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 201--202
+
+ []
+
+<REQUEST_SMARTD_VALUE_DISTRIBUTION.JPG, id=37, 368.87813pt x 259.7203pt>
+File: REQUEST_SMARTD_VALUE_DISTRIBUTION.JPG Graphic file (type jpg)
+
+<use REQUEST_SMARTD_VALUE_DISTRIBUTION.JPG> [9] [10 <C:/Users/Elin/Desktop/web-
+interface server side processing - http queries/REQUEST_SMARTD_VALUE_DISTRIBUTI
+ON.JPG>]
+("C:\Users\Elin\Desktop\web-interface server side processing - http queries\htt
+p queries.aux") ) 
+Here is how much of TeX's memory you used:
+ 1537 strings out of 495285
+ 20081 string characters out of 3179880
+ 72842 words of memory out of 3000000
+ 4766 multiletter control sequences out of 15000+200000
+ 4970 words of font info for 19 fonts, out of 3000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 27i,5n,20p,541b,195s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files (x86)/MiKTeX 2.8/fonts/type1/public/amsfonts
+/cm/cmbx12.pfb><C:/Program Files (x86)/MiKTeX 2.8/fonts/type1/public/amsfonts/c
+m/cmr12.pfb><C:/Program Files (x86)/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/c
+msy10.pfb><C:/Program Files (x86)/MiKTeX 2.8/fonts/type1/public/amsfonts/cm/cmt
+t12.pfb>
+Output written on "http queries.pdf" (10 pages, 565400 bytes).
+PDF statistics:
+ 58 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 36 words of extra memory for PDF output out of 10000 (max. 10000000)
+

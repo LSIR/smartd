@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<title>SmartD Fourth</title>
+	
+	
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/variables.less"> 
+	<link rel="stylesheet/less" type="text/css" href="style/SmartD_style/less/bootswatch.less"> 
+	<script src="js/less.js"  type="text/javascript"></script>
+	
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="style/SmartD_style/css/bootstrap.min.css" type="text/css" />
+	
+	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+	<script type="text/javascript" src="js/jquery-tooltip.js"></script>	
+	
+	
+	<script type="text/javascript">
+	$(document).ready(function(){
+	
+		
+		
+		$.plot($("#placeholder"), [[]]);
+		
+	
+	// On the first load the language will be English		
+	$.getScript('js/smartd-languages/en.js', function()
+		{				
+			
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title").innerHTML=lang.thirdControlPanel;
+			document.getElementById("startTime").innerHTML=lang.startTime;
+			document.getElementById("endTime").innerHTML=lang.endTime;
+			
+			document.getElementById("bin").innerHTML=lang.bin;
+			document.getElementById("binNum").innerHTML=lang.binNum;
+			document.getElementById("binSize").innerHTML=lang.binSize;
+			
+			document.getElementById("id-label").innerHTML=lang.id;			
+			
+			document.getElementById("display").innerHTML=lang.displayPlot;		
+			
+			
+		});			
+	
+	
+		//Submit
+	$("#fourthForm").submit(function(){
+		
+		
+		$.blockUI({ css: { 
+            border: 'none', 
+            padding: '15px',            
+            backgroundColor: '#87CEEB', 
+            color: '#000000',
+            '-webkit-border-radius': '10px', 
+            '-moz-border-radius': '10px', 
+            opacity: .5, 
+             
+        } });
+        
+		var datasets = [];		
+		
+		var startTime = document.forms["fourthForm"]["start-time"].value;		
+		var endTime = document.forms["fourthForm"]["end-time"].value;
+		var bin = document.forms["fourthForm"]["select-bin"].value;		
+		var binInput = document.forms["fourthForm"]["binInput"].value;
+		var ids = document.forms["fourthForm"]["id"].value;		
+		
+		var binSize = 0.0;		
+				
+		//alert(startTime+"    "+endTime+"    "+bin+"    "+binInput);
+		
+		
+		var parseIDs = ids.split(';');
+		
+		function displayBars(ids){	
+			
+			var userID = parseIDs[ids];
+							
+			if(ids<parseIDs.length)
+				ids++;
+			
+			else
+				return false; 
+			
+			line = [];		
+			var binIn = 0;
+			var xAxisLabel = [];
+		
+		
+		$.ajax({
+						
+		  	type: "GET",	
+		  	url:"/gsn?REQUEST=124&id="+userID+"&startTime="+startTime+"&endTime="+endTime+"&bin="+bin+"&binInput="+binInput,	
+		  	dataType: "xml",
+		  	success:function(xml){		  	
+		  	
+		  		var bin = "";
+		  		var count = "";	
+		  		
+		  		$(xml).find('stream-element').each(function(){
+		  			
+		  					  				
+		  			bin = $(this).find('field[name="bin"]').text();
+		  			count = $(this).find('field[name="count"]').text();			  			
+		  			line.push([  bin , count ]);
+		  			xAxisLabel.push([ bin , bin ]);
+		  			
+		  			if(binIn==1)
+		  				binSize = parseFloat(bin);
+		  			binIn++;
+		  			
+		  			//alert(bin+"    "+count);
+		  			
+		  		});
+		  		
+		  		var JSONObject= {		  				
+		  				"label": userID,
+		  				"data": line
+		  				};
+		  		
+		  		datasets.push(JSONObject);	
+		  		
+		  		//alert(binSize);		  	
+		  			  		
+		  		if (ids==parseIDs.length){
+		  		 
+		  		
+		  				var options = {				  				
+				  				yaxis: { color: "white"},				  				
+				  				xaxis: { color: "white",ticks: xAxisLabel},
+				  				legend:{      				  		            
+				  		            container: $("#chartLegend"),
+				  		            noColumns: ids
+				  		        },
+				  		        series: { bars: { show: true, barWidth: binSize}, stack: true}				  				
+				  		};	
+		  				
+		  				$.unblockUI();
+		  				$.plot($("#placeholder"), datasets, options);
+		  		
+		  			}
+		  		else{
+		  			displayBars(ids);
+		  			}
+		  		
+		  		}
+		    
+		     
+		}); 			
+			
+		}
+		
+		displayBars(0);
+			
+		return false;
+		
+	});		
+			
+	
+	
+	//Selected language = English	
+	$("#english").click(function(){	
+		
+		$.getScript('js/smartd-languages/en.js', function()
+		{		
+							
+			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
+			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
+			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
+			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
+			
+			document.getElementById("title").innerHTML=lang.thirdControlPanel;
+			document.getElementById("startTime").innerHTML=lang.startTime;
+			document.getElementById("endTime").innerHTML=lang.endTime;
+			
+			document.getElementById("bin").innerHTML=lang.bin;
+			document.getElementById("binNum").innerHTML=lang.binNum;
+			document.getElementById("binSize").innerHTML=lang.binSize;
+			
+			document.getElementById("id-label").innerHTML=lang.id;
+			
+			
+			document.getElementById("display").innerHTML=lang.displayPlot;				
+			
+			
+		});	
+	});
+	
+	//Selected language = French	
+	$("#french").click(function(){
+	
+		alert("french");
+	});
+	
+	
+	
+	
+});
+
+</script>
+
+<style type="text/css">
+#chartLegend .legendLabel { margin-top: 30px; color : white}
+</style>
+	
+</head>
+<body>
+
+	<div class="container" style="margin-top: 20px;">
+
+		<div class="navbar-collapse collapse navbar-responsive-collapse">
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="SmartDindex.html"><font
+						size="14" color="white">SmartD</font></a></li>
+				<li><a  href="smartd1.html"><font id="firstVisualization" size="3"></font></a></li>
+				<li><a  href="smartd2.html"><font id="secondVisualization" size="3"></font></a></li>
+				<li><a  href="smartd3.html"><font id="thirdVisualization" size="3"></font></a></li>
+				<li><a  href="smartd4.html"><font id="fourthVisualization" size="3"></font></a></li>
+
+			</ul>
+
+			<ul class="nav navbar-nav navbar-right">
+				<li><a id="english" href="#">en</a></li>
+				<li><a id="french" href="#">fr</a></li>
+			</ul>
+		</div>
+		<!-- /.nav-collapse -->
+
+	</div>
+	<!-- /.container -->
+	
+	
+          <div class="col-lg-4" style="margin-top: 25px; margin-left: 60px;">
+            <div class="well">
+              <form class="bs-example form-horizontal"  id="fourthForm">
+                <fieldset>
+                  <legend><font id="title" size="3"></font></legend>
+                  
+                  <div class="form-group">
+                    <label id="startTime" style="margin-top: 5px; margin-left: 15px; color:white;"></label>
+                    <br/>
+                    <div class="col-lg-11">
+                      <input style="margin-top: 5px; margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="start-time">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label id="endTime" style="margin-top: 5px; margin-left: 15px; color:white;"></label>
+                    <br/>
+                    <div class="col-lg-11">
+                      <input style="margin-top: 5px; margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="end-time">
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                  <label id="bin" style="margin-top: 5px; margin-left: 15px; color:white;"></label>
+                  <br/>
+                  <div class="col-lg-11">
+                      <select class="form-control col-lg-2" id="select-bin" name="select-bin" style="width: 50%; color:black;">
+                        <option id="binNum" value="binNum"></option>
+                        <option id="binSize" value="binSize"></option>
+                      </select>
+                      <input style="margin-left: 5px; color:black; width: 50%;" type="text" class="form-control" id="binInput">
+                  </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label id="id-label" style="margin-left: 15px; color:white;"></label>
+                    <br/>
+                   <div class="col-lg-11">
+                      <input style="margin-top: 2px; height:35px; margin-left: 0px; color:black;" type="text" class="form-control" id="id">
+                    </div>
+                    </div>
+                                          
+                  
+                    <div class="col-lg-11"> 
+                      <center><button id="display" type="submit" class="btn btn-primary"></button></center> 
+                    </div>
+                  
+                </fieldset>
+              </form>
+            </div>
+          </div>
+          
+			
+                     
+          <div class="container" id="placeholder" style="width:650px;height:450px; margin-top: 40px; margin-right: 100px;"></div>
+     	  <center><div id="chartLegend"></div></center>
+     
+     
+     
+<script src="js/jquery.js"></script>
+<script type="text/javascript" src="js/jquery.blockUI.js"></script>
+<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.js"></script> 
+ 
+
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.pie.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/excanvas.min.js"></script>
+
+	
+</body>
+</html>	
