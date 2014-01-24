@@ -1,7 +1,7 @@
-smartd
+SmartD
 ======
 
-SmartD
+It is a smart meter data analytics dashboard.
 
 Video demo is available [here](http://www.youtube.com/watch?v=ORnUrxPTdjs)
 
