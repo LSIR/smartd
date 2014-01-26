@@ -1,4 +1,4 @@
-some mysql related commands:
+some MySQL related commands:
 
 
 to create database:
@@ -28,6 +28,12 @@ SHOW TABLES;
 
 adding file *.sql into a database
 1. use a database
-2. execute: 
-   mysql> source /path/to/sql/file.sql
+   USE gsn;
+2. import a *.sql file: 
+   source /path/to/sql/file.sql
+
+
+rename tables:
+RENAME TABLE old_table_name TO new_table_name;
+
 
