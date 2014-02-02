@@ -5,6 +5,6 @@ It is a smart meter data analytics dashboard, developed on top of [GSN](http://s
 This project is originally developed as part of 
 [Aylin](http://people.epfl.ch/aylin.jarrahnezhad)'s semester project.
 
-SmartD demonstration video is available [here](http://www.youtube.com/watch?v=ORnUrxPTdjs).
+SmartD demonstration video is available [here](http://www.youtube.com/watch?v=qK3PzYeZC9s).
 
 To run the project, please see <code>gsn/SmartD/README.txt</code>
