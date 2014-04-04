@@ -8,7 +8,7 @@ SmartD demonstration video is available [here](http://www.youtube.com/watch?v=qK
 
 To run the project, please see <code>gsn/SmartD/README.txt</code>
 
-Interested to extend SmartD? Check our query documentation [here](../blob/master/gsn/SmartD/web-interface server side processing - http queries/http queries.pdf) and GSN documentation [here](http://sourceforge.net/apps/trac/gsn/wiki/Documentation)
+Interested to extend SmartD? Check our query documentation [here](../../raw/master/gsn/SmartD/web-interface%20server%20side%20processing%20-%20http%20queries/http%20queries.pdf) and GSN documentation [here](http://sourceforge.net/apps/trac/gsn/wiki/Documentation)
 
 For GSN performance evaluation, see 
 Section 3.7 [here](http://infoscience.epfl.ch/record/142936/files/EPFL_TH4611.pdf) 
