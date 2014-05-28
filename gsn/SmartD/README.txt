@@ -10,26 +10,30 @@ Installation and running from Eclipse:
 2. Set the username equal to "gsn" and the password equal to "gsnpassword"
 
 3. Go to /tables
-a. Extract electric_data_small_5.sql.zip, 
-b. Import the tables: 
-   - electric_data_small_5.sql
-   - ireland_survey_answer_small_5.sql 
-   - ireland_survey_answer_options.sql
-   - ireland_survey_question.sql
-   to the gsn database.
-   NOTE: electric_data_small_5 and ireland_survey_answer_small_5 contains only
-         a (very small) subset of the dataset that we used for the demo 
-         (we took randomly 5 ids and anonymize them).
-         The original dataset that we used is the CER dataset: 
-         CER smart metering project:   
-         https://www.ucd.ie/issda/data/commissionforenergyregulationcer/
-         Please contact them to obtain the full dataset.
-c. rename table electric_data_small_5 to electric_data
-   rename table ireland_survey_answer_small_5 to ireland_survey_answer
-d. NOTE: for all these tables, we used MyISAM engine. Depending on what you 
-   want, you might want to change it to InnoDB. There are a lot of 
-   documentation/forum discussed their difference (just in case you do not 
-   understand their differences)
+
+	a. Extract electric_data_small_11.sql.zip, 
+
+	b. Import the tables: 
+	   - electric_data_small_11.sql
+	   - ireland_survey_answer_small_11.sql 
+	   - ireland_survey_answer_options.sql
+	   - ireland_survey_question.sql
+	   to the gsn database.
+	   NOTE: electric_data_small_11 and ireland_survey_answer_small_11 contains only
+		     a (very small) subset of the dataset that we used for the demo 
+		     (we took randomly 11 ids and anonymize them).
+		     The original dataset that we used is the CER dataset: 
+		     CER smart metering project:   
+		     https://www.ucd.ie/issda/data/commissionforenergyregulationcer/
+		     Please contact them to obtain the full dataset.
+
+	c. rename table electric_data_small_11 to electric_data
+	   rename table ireland_survey_answer_small_11 to ireland_survey_answer
+
+	d. NOTE: for all these tables, we used MyISAM engine. Depending on what you 
+	   want, you might want to change it to InnoDB. There are a lot of 
+	   documentation/forum discussed their difference (just in case you do not 
+	   understand their differences)
 
 NOTE: this step 4 below assumes that you have already gsn in your eclipse (and 
       you understand how to run gsn). If not, please check 
