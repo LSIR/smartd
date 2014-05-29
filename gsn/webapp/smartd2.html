@@ -16,11 +16,13 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="js/jquery-tooltip.js"></script>
+	<script type="text/javascript" src="js/getSetCookie.js"></script>
 	
 
 
 <script type="text/javascript">
 	
+
 	function change(){
 		
 		$.blockUI({ css: { 
@@ -79,8 +81,13 @@
 	$(document).ready(function(){
 				
 	
-	// On the first load the language will be English
-	$.getScript('js/smartd-languages/en.js', loadLanguage);		
+	// On the first load check the language cookie
+	var clang = getCookie("clang")
+	if ( clang=="fr" ) {
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);				
+	} else {
+		$.getScript('js/smartd-languages/en.js', loadLanguage);		
+	}
 	
 		
 	function loadLanguage() {		

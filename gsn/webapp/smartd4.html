@@ -16,7 +16,8 @@
 	<script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript" src="js/jquery-1.10.2.js"></script>
 	<script type="text/javascript" src="js/jquery-tooltip.js"></script>	
-	
+	<script type="text/javascript" src="js/getSetCookie.js"></script>
+
 	
 	<script type="text/javascript">
 	$(document).ready(function(){
@@ -25,9 +26,13 @@
 		
 		$.plot($("#placeholder"), [[]]);
 		
-	
-	// On the first load the language will be English		
-	$.getScript('js/smartd-languages/en.js', loadLanguage);			
+	// On the first load check the language cookie
+	var clang = getCookie("clang")
+	if ( clang=="fr" ) {
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);				
+	} else {
+		$.getScript('js/smartd-languages/en.js', loadLanguage);		
+	}
 	
 	function loadLanguage() {
 			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
@@ -166,11 +171,13 @@
 	//Selected language = English	
 	$("#english").click(function(){			
 		$.getScript('js/smartd-languages/en.js', loadLanguage);	
+		setCookie("clang", "en");
 	});
 	
 	//Selected language = French	
 	$("#french").click(function(){
 		$.getScript('js/smartd-languages/fr.js', loadLanguage);	
+		setCookie("clang", "fr");
 	});
 	
 	
@@ -201,7 +208,7 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a id="english" href="#">en</a></li>
+				<li><a id="english" href="#">en</a></li>				
 				<li><a id="french" href="#">fr</a></li>
 			</ul>
 		</div>

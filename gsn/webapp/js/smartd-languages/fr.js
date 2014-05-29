@@ -32,8 +32,8 @@ displayPlot : "Affichage",
 savePlot : "Enregistrer",
 loadPlot : "Load",
 
-title1 : "Choisissez 5 attributs!",
-title2 : "Remplissez les valeurs!",
+title1 : "Choisissez attributs",
+title2 : "Remplissez les valeurs",
 title3 : "Évaluation",
 
 weekDay : "Jour de la semaine",
