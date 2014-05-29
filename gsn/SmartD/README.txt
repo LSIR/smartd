@@ -30,7 +30,11 @@ Installation and running from Eclipse:
 	c. rename table electric_data_small_11 to electric_data
 	   rename table ireland_survey_answer_small_11 to ireland_survey_answer
 
-	d. NOTE: for all these tables, we used MyISAM engine. Depending on what you 
+	d. apply the sql script on file remove-qid-1-and-2.sql to remove question 
+       ID 1 and 2 (which seem to be irrelevant for our inferencing)
+       (you can simply copy/paste each line to the mysql console)
+
+	e. NOTE: for all these tables, we used MyISAM engine. Depending on what you 
 	   want, you might want to change it to InnoDB. There are a lot of 
 	   documentation/forum discussed their difference (just in case you do not 
 	   understand their differences)
