@@ -96,6 +96,7 @@
         } }); 
 		
 		datasets = [];
+		datasetsFrc = [];
 		maximum = 0.0;
 		minimum = 0.0;
 		
@@ -135,13 +136,12 @@
 			var userIDs = parseLines[lines];
 							
 			if(lines<parseLines.length)
-				lines++;
-			
+				lines++;			
 			else
 				return false; 
 			
 			line = [];		
-		
+			lineFrc = [];
 		
 		$.ajax({
 						
@@ -154,62 +154,73 @@
 		  		var value = "";
 		  		var dateTimeToDate;		  		
 		  		
-		  		$(xml).find('stream-element').each(function(){
-		  			
+		  		$(xml).find('stream-element').each(function(){		  			
 		  			dateTime = $(this).find('field[name="TIMESTAMP"]').text();
 		  			value = $(this).find('field[name="VALUE"]').text();		  			
-		  			
 		  			dateTimeToDate = stringToDate(dateTime);
 		  			line.push([  dateTimeToDate , value ]);
 		  			
 		  			if (parseFloat(value) > parseFloat(maximum))
 		  				maximum = value;
 		  			else if (parseFloat(value) < parseFloat(minimum))
-		  				minimum = value;
+		  				minimum = value;		  			
+		  		});
+		  		
+		  		$(xml).find('forecast-element').each(function(){		  			
+		  			dateTime = $(this).find('field[name="TIMESTAMP"]').text();
+		  			value = $(this).find('field[name="VALUE"]').text();		  			
 		  			
+		  			dateTimeToDate = stringToDate(dateTime);
+		  			lineFrc.push([  dateTimeToDate , value ]);
+		  			
+		  			if (parseFloat(value) > parseFloat(maximum))
+		  				maximum = value;
+		  			else if (parseFloat(value) < parseFloat(minimum))
+		  				minimum = value;		  			
 		  		});
 		  		
 		  		var JSONObject= {		  				
-		  				"label": userIDs,
-		  				"data": line
+		  					label: userIDs,
+		  					data: line,
+		  					lines: {show:true},
+		  					color : lines-1,
 		  				};
-		  		
-		  		datasets.push(JSONObject);		  		
+		  		var JSONObjectFrc= {		  				
+		  					data: lineFrc,
+		  					dashes: {show:true},
+		  					color: lines-1,
+		  				};
+		  		datasets.push(JSONObject);
+		  		datasets.push(JSONObjectFrc);
 		  		if (lines==parseLines.length){
 		  		
-		  		var maxSize = parseFloat(maximum);
-		  		var minSize = parseFloat(minimum);		  		
+		  			var maxSize = parseFloat(maximum);
+		  			var minSize = parseFloat(minimum);		  		
 		  		
-		  		maxSize = maxSize + maxSize/10 ;
-		  		if(minSize<0.0)
-		  			minSize = minSize + minSize/10 ;
+		  			maxSize = maxSize + maxSize/10 ;
+		  		    if(minSize<0.0)
+		  				minSize = minSize + minSize/10 ;
 		  		
-		  		
-		  				var options = {		
-		  				
-		  						series: {
-   									 lines: {
-     									 lineWidth: 3
-   									 },
-   								 },
-		  								  				
+		  			var options = {		
+		  					  				
 				  				yaxis: { color: "white", min: minSize, max: maxSize },				  				
 				  				xaxis: { color: "white", mode: "time"},
 				  				legend:{      				  		            
 				  		            container: $("#chartLegend"),
 				  		            noColumns: lines
 				  		        }				  				
-				  		};	
+				  	};	
 		  				
-		  				$.unblockUI();
-		  				var plotObj = $.plot( $("#placeholder"), datasets  ,options);
-		  		
-		  			}
-		  		else{
-		  			displayLines(lines);
-		  			}
-		  		
+		  			$.unblockUI();
+		  			var plotObj = $.plot( $("#placeholder"), datasets, options);
+		  			//$.plot( plotObj, datasetsFrc, options);
 		  		}
+		  		else
+		  		{
+		  			displayLines(lines);
+		  		}
+		  		
+		  	}
 		    
 		     
 		}); 			
@@ -317,14 +328,14 @@
                     <label id="startTime" style="margin-left: 15px; color:white;"></label>
                     <br/>
                     <div class="col-lg-11">
-                      <input min="2009-01-01T00:00" max="2010-12-31T23:59"  style="margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="start-time">
+                      <input min="2009-01-01T00:00" max="2011-01-31T23:59"  style="margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="start-time">
                     </div>
                   </div>
                   <div class="form-group">
                     <label id="endTime" style=" margin-left: 15px; color:white;"></label>
                     <br/>
                     <div class="col-lg-11">
-                      <input min="2009-01-01T00:00" max="2010-12-31T23:59" style=" margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="end-time">
+                      <input min="2009-01-01T00:00" max="2011-01-31T23:59" style=" margin-left: 0px; color:black;" type="datetime-local" class="form-control" id="end-time">
                     </div>
                   </div>
                   
@@ -401,6 +412,7 @@
 <script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.pie.js"></script>
 <script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.resize.js"></script>
+<script type="text/javascript" src="js/bootstrap/js/flot/jquery.flot.dashes.js"></script>
 	
 </body>
 </html>	

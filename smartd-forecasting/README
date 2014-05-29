@@ -1,0 +1,21 @@
+#
+# @author Tri Kurniawan Wijaya <tri-kurniawan.wijaya@epfl.ch>
+# @date Thu 29 May 2014 12:44:20 PM CEST 
+#
+
+This code is useful to generate the forecast for SmartD
+
+How to run
+==========
+$ java -jar Forecast.jar
+
+More details
+============
+This code:
+1 takes the energy consumption data from the table electric_data, and
+  execute a forecasting capability of ComputeBaseline.jar:
+	- starts from the latest data available in the electric_data table
+	- up to x days ahead, where x is the value of forecast-horizon in system.config
+
+2 puts the forecasting result in the electric_data_forecast table
+

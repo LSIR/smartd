@@ -1,5 +1,6 @@
 package gsn.http;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -11,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -46,131 +48,64 @@ public class SmartDChartHandler implements RequestHandler {
         String startTime = "";
         String endTime = "";
         
-        int resultNum = 0;     
-        String vsCondition = "";
         String timeCondition=null;
-        int resultTimingIndex = 0;
-        int resultValueIndex = 0;
-        
-        String[] resultTiming = null;
-    	double[] resultValue = null;
-        
-        double mean = 0.0;
-        double stddev = 1.0;
-        
-        double min = Double.MAX_VALUE;
-        double max = Double.MIN_VALUE;
-        double sum = 0.0;
-        double aggrValue = 0.0;
-        double readingValue = 0.0;
         
         
-        int counterDateTime = 0;
-        int counterValue = 0;
-        
-        Integer startTimeYear, startTimeMonth, startTimeDay,startTimeHour, startTimeMinute;
-        Integer endTimeYear, endTimeMonth, endTimeDay, endTimeHour, endTimeMinute;
-        
-        //------------interval-----------------------------------------
-        
+        //------------interval-----------------------------------------       
         if (vsInterval == null || vsInterval.trim().length() == 0){        	
         	vsInterval = "30";
         }          
         
-        //-------------interval aggregation function-------------------------
         
+        //-------------interval aggregation function-------------------------       
         if (vsIntervalAggregation == null || vsIntervalAggregation.trim().length() == 0)
         	vsIntervalAggregation =  "avg";  
         
-        //-------------aggregation function-------------------------
         
+        //-------------aggregation function-------------------------       
         if (vsAggregation == null || vsAggregation.trim().length() == 0)
         	vsAggregation =  "avg";  
         
-        //--------------start time--------------------------
         
+        //--------------start time--------------------------        
         if (vsStartTime != null && vsStartTime.trim().length() != 0)
         {
         	try {
     			start = formatter.parse(vsStartTime);
     		} catch (ParseException e1) {
-    			// TODO Auto-generated catch block
     			e1.printStackTrace();
     		}   
-        	String[] parseStartDateTime = vsStartTime.split("T");
-        	
-        	String[] parseStartDate = parseStartDateTime[0].split("-");
-        	startTimeYear = Integer.valueOf(parseStartDate[0]);
-    		startTimeMonth = Integer.valueOf(parseStartDate[1]);
-    		startTimeDay = Integer.valueOf(parseStartDate[2]);
-    		
-        	
-        	String[] parseTime = parseStartDateTime[1].split(":");
-        	startTimeHour = Integer.valueOf(parseTime[0]);
-        	startTimeMinute = Integer.valueOf(parseTime[1]);
-        	  
-        	
         	startTime = String.valueOf(start.getTime()/1000);
-        	
-        	if(startTimeYear==2010 || startTimeYear==2009 || startTimeYear==2011){            	
-        		timeCondition =  startTime+"<=TIMESTAMP";  
-        		
-        	}
-        	else {
-        		
-        	}
-        }
-        else {
-        	
+        	timeCondition =  startTime+"<=TIMESTAMP";         		
         }
         
-        //--------------end time-------------------------------------------
         
+        //--------------end time-------------------------------------------        
         if (vsEndTime != null && vsEndTime.trim().length() != 0)
         {
         	try {
     			end = formatter.parse(vsEndTime);
     		} catch (ParseException e1) {
-    			// TODO Auto-generated catch block
     			e1.printStackTrace();
-    		}
-        	
-        	String[] parseEndDateTime = vsEndTime.split("T");
-        	
-        	String[] parseDate = parseEndDateTime[0].split("-");
-        	endTimeYear = Integer.valueOf(parseDate[0]);
-    		endTimeMonth = Integer.valueOf(parseDate[1]);
-    		endTimeDay = Integer.valueOf(parseDate[2]);
-        	
-        	String[] parseTime = parseEndDateTime[1].split(":");
-        	endTimeHour = Integer.valueOf(parseTime[0]);
-        	endTimeMinute = Integer.valueOf(parseTime[1]);
-        	
+    		}        	
         	endTime = String.valueOf(end.getTime()/1000);
-        	
-        	if(endTimeYear==2009||endTimeYear==2010 || endTimeYear==2011){ 
-        		
-        		if(timeCondition.equals(""))
-        			timeCondition =  endTime+">=TIMESTAMP";
-        		else
-        			timeCondition =  timeCondition+" and "+endTime+">=TIMESTAMP";
-        	}
-        	else {
-        		
-        	}
+        	if(timeCondition.equals(""))
+        		timeCondition =  endTime+">=TIMESTAMP";
+        	else
+        		timeCondition =  timeCondition+" and "+endTime+">=TIMESTAMP";       	
         }
-         else {
-        	 
-         }
-        
         
         Connection con = null;
         Statement stm = null;
         ResultSet rs = null;
-
-        String url = "jdbc:mysql://localhost/gsn";
-        String user = "gsn";
-        String password = "gsnpassword";
+        
+		Properties prop = new Properties();
+		prop.load(new FileInputStream("smartd.config"));
+		String dbHost     = prop.getProperty("dbHost");
+		String dbDatabase = prop.getProperty("dbDatabase");
+		String user 	  = prop.getProperty("dbUsername");
+		String password   = prop.getProperty("dbPassword");		
+		String url        = "jdbc:mysql://" + dbHost + "/" + dbDatabase;
         
         int userNum = 0;		
 		ArrayList<String> users = new ArrayList<String>();
@@ -181,7 +116,7 @@ public class SmartDChartHandler implements RequestHandler {
             stm = con.createStatement();
             
         
-        if (vsIDs != null && vsIDs.trim().length() != 0){
+            if (vsIDs != null && vsIDs.trim().length() != 0){
         	
 				if (vsIDs.equalsIgnoreCase("all")) {
 
@@ -208,30 +143,204 @@ public class SmartDChartHandler implements RequestHandler {
 
 				else {
 					parseIDs = vsIDs.split(",");
-
+					//.. logger.warn("parseIDs: "+vsIDs);
 				}
-        }
+				
+            } else {       	
+            	logger.warn("Please enter the use IDs!");        	
+            } 	
         
-        else{
-        	
-        	logger.warn("Please enter the use IDs!");        	
-        } 	
-        
-        //-------------normalization-----------------------
-        
+            
+        //-------------normalization-----------------------       
         if (vsNormalization == null || vsNormalization.trim().length() == 0)
         	vsNormalization =  "false";
        
         
-       resultTimingIndex = 0;
+        /** get the data required for plotting **/
+        ArrayList<Object> resultData = getData(parseIDs, vsInterval, vsAggregation, vsIntervalAggregation, vsNormalization, timeCondition, electricDataTable, stm, rs);   
+        String[] resultTiming = (String[]) resultData.get(0);
+    	double[] resultValue = (double[]) resultData.get(1);
         
-        for(int id=0; id<parseIDs.length ;id++){
+    	
+    	/** get the forecasted data **/
+    	String query = "select max(TIMESTAMP) from " + electricDataTable + ";" ;
+    	rs = stm.executeQuery(query);
+    	rs.next();
+    	startTime = rs.getString(1); // renew startTime, endTime does not change 
+    	boolean frcFlag = false;
+    	
+    	if ( Long.parseLong(startTime) < Long.parseLong(endTime) ) {
+    		frcFlag = true;
+    	}
+    	
+		String[] resultTimingFrc = null;
+		double[] resultValueFrc = null;
+    	
+    	if ( frcFlag==true ) {
+    		String timeConditionFrc = "TIMESTAMP >= " + startTime + " and TIMESTAMP <= " + endTime;
+    		//..logger.warn(timeConditionFrc);
+    		String electricDataTableFrc = electricDataTable + "_forecast";
+    		ArrayList<Object> resultDataFrc = getData(parseIDs, vsInterval, vsAggregation, vsIntervalAggregation, vsNormalization, timeConditionFrc, electricDataTableFrc, stm, rs);   
+    		resultTimingFrc = (String[]) resultDataFrc.get(0);
+    		resultValueFrc = (double[]) resultDataFrc.get(1);
+    	}
+    	
+    	
+        /* 
+        String st = "";
+        for(int resultIndex=0; resultIndex<resultNum;resultIndex++){       	
+        	st = st + resultValue[resultIndex] + ","; 
+        }       
+        System.out.println(st);
+        */
+                
+        
+    	
+        //----------------------------------result as XML------------------------------------------
+        
+        sb = new StringBuilder("<result>\n");
+        int lastIdx = 0;
+        for(int i=0; i<resultTiming.length; i++){
+        	
+        	if(resultTiming[i]!=null){        	
+        		sb.append("<stream-element>\n");
+        		sb.append("<field name=\"").append("TIMESTAMP\">").
+        		append(StringEscapeUtils.escapeXml(resultTiming[i])).
+        		append("</field>\n");
+        		sb.append("<field name=\"").append("VALUE\">").
+        		append(StringEscapeUtils.escapeXml(String.valueOf(resultValue[i]))).
+        		append("</field>\n");
+        		sb.append("</stream-element>\n");
+        		lastIdx = i;
+        	}
+        	
+        }
+        
+       	
+        // add forecasted value	       
+        if ( frcFlag == true ) {
+
+    		sb.append("<forecast-element>\n");
+    		sb.append("<field name=\"").append("TIMESTAMP\">").
+    		append(StringEscapeUtils.escapeXml(resultTiming[lastIdx])).
+    		append("</field>\n");
+    		sb.append("<field name=\"").append("VALUE\">").
+    		append(StringEscapeUtils.escapeXml(String.valueOf(resultValue[lastIdx]))).
+    		append("</field>\n");
+    		sb.append("</forecast-element>\n");       
+
+            for(int i=0; i<resultTimingFrc.length;i++){
+            	
+            	if(resultTimingFrc[i]!=null){        	
+            		sb.append("<forecast-element>\n");
+            		sb.append("<field name=\"").append("TIMESTAMP\">").
+            		append(StringEscapeUtils.escapeXml(resultTimingFrc[i])).
+            		append("</field>\n");
+            		sb.append("<field name=\"").append("VALUE\">").
+            		append(StringEscapeUtils.escapeXml(String.valueOf(resultValueFrc[i]))).
+            		append("</field>\n");
+            		sb.append("</forecast-element>\n");       
+            	}
+            	
+            }
+	
+        }
+                
+       
+        sb.append("</result>");                 
+        /*..
+        for (int i=0; i<resultTimingFrc.length; i++) {
+        	logger.warn(resultTimingFrc[i]);
+        }
+        */
+        response.setHeader("Cache-Control", "no-store");
+        response.setDateHeader("Expires", 0);
+        response.setHeader("Pragma", "no-cache");
+        response.getWriter().write(sb.toString());
+        
+        //..logger.warn(sb.toString());
+        logger.warn("END_1");
+        
+        } catch (SQLException ex) {
+            logger.warn("SQLException:"+ex);
+
+        } finally {
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stm != null) {
+                    stm.close();
+                }
+                if (con != null) {
+                    con.close();
+                }
+
+            } catch (SQLException ex) {
+            	logger.warn("SQLException:"+ex);
+            }
+        }
+        
+        
+    }
+
+    
+    public boolean isValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	
+        /*String vsName = request.getParameter("name");
+        
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+
+        if (vsName == null || vsName.trim().length() == 0) {
+            response.sendError(WebConstants.MISSING_VSNAME_ERROR, "The virtual sensor name is missing");
+            return false;
+        }
+        VSensorConfig sensorConfig = Mappings.getVSensorConfig(vsName);
+        if (sensorConfig == null) {
+            response.sendError(WebConstants.ERROR_INVALID_VSNAME, "The specified virtual sensor doesn't exist.");
+            return false;
+        }
+        
+        if (Main.getContainerConfig().isAcEnabled() == true) {
+            if (user != null) // meaning, that a login session is active, otherwise we couldn't get there
+                if (user.hasReadAccessRight(vsName) == false && user.isAdmin() == false)  // ACCESS_DENIED
+                {
+                    response.sendError(WebConstants.ACCESS_DENIED, "Access denied to the specified virtual sensor .");
+                    return false;
+                }
+        }*/
+
+        return true;
+    }
+
+
+    private ArrayList<Object> getData(String[] parseIDs, String vsInterval, String vsAggregation, String vsIntervalAggregation, String vsNormalization, String timeCondition, String electricDataTable, Statement stm, ResultSet rs) throws SQLException {
+
+    	int resultTimingIndex = 0;
+        int resultValueIndex = 0;
+
+        double min = Double.MAX_VALUE;
+        double max = Double.MIN_VALUE;
+        double sum = 0.0;
+        double aggrValue = 0.0;
+        double readingValue = 0.0;
+
+        
+        String vsCondition = "";
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+        int resultNum = 0;     
+        String[] resultTiming = null;
+    	double[] resultValue = null;
+
+    	//TODO: this code could be shortened using the aggregation facility from the database  
+    	for(int id=0; id<parseIDs.length ;id++){
         	
         	resultValueIndex = 0;
         	min = Double.MAX_VALUE;
         	max = Double.MIN_VALUE;
         	sum = 0.0;
-        	counterValue = 0;
         	
         	int idNum = id+1;
         	
@@ -276,7 +385,6 @@ public class SmartDChartHandler implements RequestHandler {
 						resultNum = resultNum / (2*24*7*4) + 1;
 
 					}
-
                  
                  if(resultNum>0){
             	
@@ -286,24 +394,24 @@ public class SmartDChartHandler implements RequestHandler {
         	
         	}
         	
-        	 rs = stm.executeQuery("select * from " + electricDataTable + " where " + vsCondition + " order by timestamp ASC" );                
+        	rs = stm.executeQuery("select * from " + electricDataTable + " where " + vsCondition + " order by timestamp ASC" );                
+            int counterDateTime = 1;
+            int counterValue = 1;
 
-				while (rs.next()) {
+			while (rs.next()) {
 
 					if (id == 0) {
 
 						Date dt = new Date(rs.getLong("TIMESTAMP") * 1000);
 						if (vsInterval.equals("30")) {
-							resultTiming[resultTimingIndex] = formatter
-									.format(dt);
-							resultTimingIndex++;
-							counterDateTime = 0;
+							resultTiming[resultTimingIndex] = formatter.format(dt); // this has to be moved outside?
+							resultTimingIndex++; // this has to be moved outside?
+							counterDateTime = 0; // this has to be moved outside?
 						}
 
 						else if (vsInterval.equals("hour")
 								&& (counterDateTime % 2 == 0)) {
-							resultTiming[resultTimingIndex] = formatter
-									.format(dt);
+							resultTiming[resultTimingIndex] = formatter.format(dt);
 							resultTimingIndex++;
 							counterDateTime = 0;
 
@@ -311,8 +419,7 @@ public class SmartDChartHandler implements RequestHandler {
 
 						else if (vsInterval.equals("day")
 								&& (counterDateTime % (2 * 24) == 0)) {
-							resultTiming[resultTimingIndex] = formatter
-									.format(dt);
+							resultTiming[resultTimingIndex] = formatter.format(dt);
 							resultTimingIndex++;
 							counterDateTime = 0;
 
@@ -320,8 +427,7 @@ public class SmartDChartHandler implements RequestHandler {
 
 						else if (vsInterval.equals("week")
 								&& (counterDateTime % (2 * 24 * 7) == 0)) {
-							resultTiming[resultTimingIndex] = formatter
-									.format(dt);
+							resultTiming[resultTimingIndex] = formatter.format(dt);
 							resultTimingIndex++;
 							counterDateTime = 0;
 
@@ -329,8 +435,7 @@ public class SmartDChartHandler implements RequestHandler {
 
 						else if (vsInterval.equals("month")
 								&& (counterDateTime % (2 * 24 * 7 * 4) == 0)) {
-							resultTiming[resultTimingIndex] = formatter
-									.format(dt);
+							resultTiming[resultTimingIndex] = formatter.format(dt);
 							resultTimingIndex++;
 							counterDateTime = 0;
 
@@ -773,23 +878,18 @@ public class SmartDChartHandler implements RequestHandler {
 
 					counterValue++;
 
-				}
+			} // end while (rs.next())
 
-			}
+		} // end for 
         
-        
-       /* String st = "";
-        for(int resultIndex=0; resultIndex<resultNum;resultIndex++){
-        	
-        	st = st + resultValue[resultIndex] + ","; 
-        }
-        
-        System.out.println(st);*/
         
         //-----------------------------------normalization TRUE-----------------------------------
         
         if(vsNormalization.equals("true")){
         	
+            double mean = 0.0;
+            double stddev = 1.0;
+
         	double sumNorm = 0.0;
         	
         	for(int resultIndex=0; resultIndex<resultNum;resultIndex++){
@@ -819,87 +919,13 @@ public class SmartDChartHandler implements RequestHandler {
         		}
         	
         }
-                
-        
-        //----------------------------------result as XML------------------------------------------
-        
-        sb = new StringBuilder("<result>\n");
-        for(int resultIndex=0; resultIndex<resultNum;resultIndex++){
-        	
-        	if(resultTiming[resultIndex]!=null){
-        	
-        		sb.append("<stream-element>\n");
-        		sb.append("<field name=\"").append("TIMESTAMP\">").
-        		append(StringEscapeUtils.escapeXml(resultTiming[resultIndex])).
-        		append("</field>\n");
-        		sb.append("<field name=\"").append("VALUE\">").
-        		append(StringEscapeUtils.escapeXml(String.valueOf(resultValue[resultIndex]))).
-        		append("</field>\n");
-        		sb.append("</stream-element>\n");       
-        	}
-        	
-        }
-       
-        sb.append("</result>");                 
-        
-        response.setHeader("Cache-Control", "no-store");
-        response.setDateHeader("Expires", 0);
-        response.setHeader("Pragma", "no-cache");
-        response.getWriter().write(sb.toString());
-        
-        logger.warn("END_1");
-        
-        } catch (SQLException ex) {
-            logger.warn("SQLException:"+ex);
 
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (con != null) {
-                    con.close();
-                }
-
-            } catch (SQLException ex) {
-            	logger.warn("SQLException:"+ex);
-            }
-        }
-        
-        
-    }
-
-    public boolean isValid(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    	ArrayList<Object> result = new ArrayList<Object>();
+    	result.add(resultTiming);
+    	result.add(resultValue);
     	
-        /*String vsName = request.getParameter("name");
+        return result;
         
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
-
-        if (vsName == null || vsName.trim().length() == 0) {
-            response.sendError(WebConstants.MISSING_VSNAME_ERROR, "The virtual sensor name is missing");
-            return false;
-        }
-        VSensorConfig sensorConfig = Mappings.getVSensorConfig(vsName);
-        if (sensorConfig == null) {
-            response.sendError(WebConstants.ERROR_INVALID_VSNAME, "The specified virtual sensor doesn't exist.");
-            return false;
-        }
-        
-        if (Main.getContainerConfig().isAcEnabled() == true) {
-            if (user != null) // meaning, that a login session is active, otherwise we couldn't get there
-                if (user.hasReadAccessRight(vsName) == false && user.isAdmin() == false)  // ACCESS_DENIED
-                {
-                    response.sendError(WebConstants.ACCESS_DENIED, "Access denied to the specified virtual sensor .");
-                    return false;
-                }
-        }*/
-
-        return true;
     }
-
 
 }
