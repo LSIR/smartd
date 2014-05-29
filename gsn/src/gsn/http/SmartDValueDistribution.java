@@ -8,6 +8,7 @@ import gsn.beans.VSensorConfig;
 import gsn.http.ac.User;
 import gsn.storage.DataEnumerator;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Properties;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -76,7 +78,6 @@ public class SmartDValueDistribution implements RequestHandler {
         	try {
     			start = formatter.parse(startTime);
     		} catch (ParseException e1) {
-    			// TODO Auto-generated catch block
     			e1.printStackTrace();
     		}   
         	String[] parseStartDateTime = startTime.split("T");
@@ -113,7 +114,6 @@ public class SmartDValueDistribution implements RequestHandler {
         	try {
     			end = formatter.parse(endTime);
     		} catch (ParseException e1) {
-    			// TODO Auto-generated catch block
     			e1.printStackTrace();
     		}
         	
@@ -155,9 +155,13 @@ public class SmartDValueDistribution implements RequestHandler {
         Statement stm = null;
         ResultSet rs = null;
 
-        String url = "jdbc:mysql://localhost/gsn";
-        String user = "gsn";
-        String password = "gsnpassword";
+		Properties prop = new Properties();
+		prop.load(new FileInputStream("smartd.config"));
+		String dbHost     = prop.getProperty("dbHost");
+		String dbDatabase = prop.getProperty("dbDatabase");
+		String user 	  = prop.getProperty("dbUsername");
+		String password   = prop.getProperty("dbPassword");		
+		String url        = "jdbc:mysql://" + dbHost + "/" + dbDatabase;
 
         try {
         	

@@ -44,7 +44,7 @@ private static transient Logger logger = Logger.getLogger(SmartDQuestionSelectio
 				}
 
 			}
-
+			//System.err.println(qid + ":" + questionRank[qid]);
 			questionRankSort[rank] = qid + 1;
 			questionRank[qid] = Integer.MIN_VALUE;
 			max = Integer.MIN_VALUE;
