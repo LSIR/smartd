@@ -27,9 +27,9 @@
 		
 	
 	// On the first load the language will be English		
-	$.getScript('js/smartd-languages/en.js', function()
-		{				
-			
+	$.getScript('js/smartd-languages/en.js', loadLanguage);			
+	
+	function loadLanguage() {
 			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
 			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
 			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
@@ -46,11 +46,7 @@
 			document.getElementById("id-label").innerHTML=lang.id;			
 			
 			document.getElementById("display").innerHTML=lang.displayPlot;		
-			
-			
-		});			
-	
-	
+	}
 		//Submit
 	$("#fourthForm").submit(function(){
 		
@@ -168,37 +164,13 @@
 	
 	
 	//Selected language = English	
-	$("#english").click(function(){	
-		
-		$.getScript('js/smartd-languages/en.js', function()
-		{		
-							
-			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
-			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
-			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
-			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
-			
-			document.getElementById("title").innerHTML=lang.thirdControlPanel;
-			document.getElementById("startTime").innerHTML=lang.startTime;
-			document.getElementById("endTime").innerHTML=lang.endTime;
-			
-			document.getElementById("bin").innerHTML=lang.bin;
-			document.getElementById("binNum").innerHTML=lang.binNum;
-			document.getElementById("binSize").innerHTML=lang.binSize;
-			
-			document.getElementById("id-label").innerHTML=lang.id;
-			
-			
-			document.getElementById("display").innerHTML=lang.displayPlot;				
-			
-			
-		});	
+	$("#english").click(function(){			
+		$.getScript('js/smartd-languages/en.js', loadLanguage);	
 	});
 	
 	//Selected language = French	
 	$("#french").click(function(){
-	
-		alert("french");
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);	
 	});
 	
 	

@@ -24,9 +24,9 @@
 		
 	
 	// On the first load the language will be English		
-	$.getScript('js/smartd-languages/en.js', function()
-		{				
-			
+	$.getScript('js/smartd-languages/en.js', loadLanguage);			
+	
+	function loadLanguage() {		
 			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
 			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
 			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
@@ -40,19 +40,18 @@
 			document.getElementById("season2").innerHTML=lang.spring;
 			document.getElementById("season3").innerHTML=lang.summer;
 			document.getElementById("season4").innerHTML=lang.autumn;
-						
-						
+			
 			document.getElementById("evaluation").innerHTML=lang.title3;
 			document.getElementById("neighbor").innerHTML=lang.EvaluationOfnNeighbors;
-			document.getElementById("question").innerHTML=lang.EvaluationOfkQuestions;	
+			document.getElementById("question").innerHTML=lang.EvaluationOfkQuestions;		
 			
 			document.getElementById("neighborNumber").innerHTML=lang.neighborNum;
-			document.getElementById("questionNumber").innerHTML=lang.questionNum;
-					
-			document.getElementById("display").innerHTML=lang.displayPlot;			
+			document.getElementById("questionNumber").innerHTML=lang.questionNum;	
 			
-		});			
+			document.getElementById("display").innerHTML=lang.displayPlot;				
+	}	
 	
+
 			
 		//Submit
 	$("#thirdForm").submit(function(){
@@ -128,42 +127,13 @@
 			
 	
 	//Selected language = English	
-	$("#english").click(function(){	
-		
-		$.getScript('js/smartd-languages/en.js', function()
-		{		
-							
-			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
-			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
-			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
-			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
-			
-			document.getElementById("title3").innerHTML=lang.title3;
-			
-			document.getElementById("season").innerHTML=lang.season;
-			document.getElementById("all").innerHTML=lang.all;
-			document.getElementById("season1").innerHTML=lang.winter;
-			document.getElementById("season2").innerHTML=lang.spring;
-			document.getElementById("season3").innerHTML=lang.summer;
-			document.getElementById("season4").innerHTML=lang.autumn;
-			
-			document.getElementById("evaluation").innerHTML=lang.title3;
-			document.getElementById("neighbor").innerHTML=lang.EvaluationOfnNeighbors;
-			document.getElementById("question").innerHTML=lang.EvaluationOfkQuestions;		
-			
-			document.getElementById("neighborNumber").innerHTML=lang.neighborNum;
-			document.getElementById("questionNumber").innerHTML=lang.questionNum;	
-			
-			document.getElementById("display").innerHTML=lang.displayPlot;				
-			
-			
-		});	
+	$("#english").click(function(){			
+		$.getScript('js/smartd-languages/en.js', loadLanguage);	
 	});
 	
 	//Selected language = French	
 	$("#french").click(function(){
-	
-		alert("french");
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);		
 	});
 	
 });

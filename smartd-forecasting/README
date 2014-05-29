@@ -19,3 +19,9 @@ This code:
 
 2 puts the forecasting result in the electric_data_forecast table
 
+Special Note
+============
+ComputeBaseline.jar is obtained from: 
+project link: https://github.com/tritritri/baselines
+direct link: https://github.com/tritritri/baselines/raw/master/ComputeBaseline.jar
+

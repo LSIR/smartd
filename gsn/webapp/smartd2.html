@@ -80,9 +80,10 @@
 				
 	
 	// On the first load the language will be English
-	$.getScript('js/smartd-languages/en.js', function(){		
+	$.getScript('js/smartd-languages/en.js', loadLanguage);		
+	
 		
-		
+	function loadLanguage() {		
 			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
 			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
 			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
@@ -111,8 +112,7 @@
 			document.getElementById("refresh").innerHTML=lang.refreshPlot;
 			
 			document.getElementById("display").innerHTML=lang.displayPlot;
-			
-	});		
+	}	
 	
 		$.plot($("#placeholder"), [[]]);
 		var questionContainer = $("#questions");
@@ -305,46 +305,13 @@
 	});		
 	
 	// Selected language = English
-	$("#english").click(function(){	
-		
-		$.getScript('js/smartd-languages/en.js', function()
-		{		
-			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
-			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
-			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
-			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
-			
-			document.getElementById("title1").innerHTML=lang.title1;
-			document.getElementById("title2").innerHTML=lang.title2;
-			
-			document.getElementById("weekDay").innerHTML=lang.weekDay;
-			document.getElementById("weekDay1").innerHTML=lang.sunday;
-			document.getElementById("weekDay2").innerHTML=lang.monday;
-			document.getElementById("weekDay3").innerHTML=lang.tuesday;
-			document.getElementById("weekDay4").innerHTML=lang.wednesday;
-			document.getElementById("weekDay5").innerHTML=lang.thursday;
-			document.getElementById("weekDay6").innerHTML=lang.friday;
-			document.getElementById("weekDay7").innerHTML=lang.saturday;	
-			document.getElementById("weekDay8").innerHTML=lang.weekdays;
-			document.getElementById("weekDay9").innerHTML=lang.weekend;			
-			
-			
-			document.getElementById("season").innerHTML=lang.season;
-			document.getElementById("season1").innerHTML=lang.winter;
-			document.getElementById("season2").innerHTML=lang.spring;
-			document.getElementById("season3").innerHTML=lang.summer;
-			document.getElementById("season4").innerHTML=lang.autumn;
-			
-			document.getElementById("refresh").innerHTML=lang.refreshPlot;
-			
-			document.getElementById("display").innerHTML=lang.displayPlot;
-			
-		});	
+	$("#english").click(function(){			
+		$.getScript('js/smartd-languages/en.js', loadLanguage);	
 	});
 	
 	// Selected language = French
 	$("#french").click(function(){	
-		alert("french");
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);			
 	});
 	
 });

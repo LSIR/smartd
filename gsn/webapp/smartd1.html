@@ -23,45 +23,7 @@
 		$.plot($("#placeholder"), [[]]);		
 	
 	// On the first load the language will be English		
-	$.getScript('js/smartd-languages/en.js', function()
-		{				
-			
-			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
-			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
-			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
-			document.getElementById("fourthVisualization").innerHTML=lang.fourthVisualization;
-			
-			document.getElementById("title").innerHTML=lang.firstControlPanel;
-			document.getElementById("startTime").innerHTML=lang.startTime;
-			document.getElementById("endTime").innerHTML=lang.endTime;
-			
-			document.getElementById("interval").innerHTML=lang.interval;
-			document.getElementById("interval1").innerHTML=lang.everyThirtyMin;
-			document.getElementById("interval2").innerHTML=lang.hourly;
-			document.getElementById("interval3").innerHTML=lang.daily;
-			document.getElementById("interval4").innerHTML=lang.weekly;
-			document.getElementById("interval5").innerHTML=lang.monthly;
-			
-			document.getElementById("intervalAggr1").innerHTML=lang.min;
-			document.getElementById("intervalAggr2").innerHTML=lang.max;
-			document.getElementById("intervalAggr3").innerHTML=lang.sum;
-			document.getElementById("intervalAggr4").innerHTML=lang.avg;
-			
-			document.getElementById("normalization").innerHTML=lang.normalization;
-			document.getElementById("id-label").innerHTML=lang.id;
-			
-			document.getElementById("aggr1").innerHTML=lang.min;
-			document.getElementById("aggr2").innerHTML=lang.max;
-			document.getElementById("aggr3").innerHTML=lang.sum;
-			document.getElementById("aggr4").innerHTML=lang.avg;
-			
-			document.getElementById("displayPlot").innerHTML=lang.displayPlot;
-			document.getElementById("savePlot").innerHTML=lang.savePlot;
-			document.getElementById("loadPlot").innerHTML=lang.loadPlot;
-						
-			
-		});			
-	
+	$.getScript('js/smartd-languages/en.js', loadLanguage);			
 			
 	var datasets = [];
 	var line = [];
@@ -234,12 +196,7 @@
 	});		
 			
 	
-	
-	//Selected language = English	
-	$("#english").click(function(){	
-		
-		$.getScript('js/smartd-languages/en.js', function()
-		{		
+	function loadLanguage() {		
 			document.getElementById("firstVisualization").innerHTML=lang.firstVisualization;
 			document.getElementById("secondVisualization").innerHTML=lang.secondVisualization;
 			document.getElementById("thirdVisualization").innerHTML=lang.thirdVisualization;
@@ -272,16 +229,19 @@
 			
 			document.getElementById("displayPlot").innerHTML=lang.displayPlot;
 			document.getElementById("savePlot").innerHTML=lang.savePlot;
-			document.getElementById("loadPlot").innerHTML=lang.loadPlot;
-			
-			
-		});	
+			document.getElementById("loadPlot").innerHTML=lang.loadPlot;	
+	}	
+		
+	//Selected language = English	
+	$("#english").click(function(){			
+		$.getScript('js/smartd-languages/en.js', loadLanguage);	
 	});
 	
 	//Selected language = French	
+	// (note: other language can be added by specifying another .js for the language
+	// and create another function similar to this function below)  
 	$("#french").click(function(){
-	
-		alert("french");
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);
 	});
 	
 	
@@ -354,7 +314,7 @@
                       <select class="form-control" style="width: 25%; color:black;" id="select-interval-aggregation" name="select-interval-aggr">
                         <option id="intervalAggr1" value="min"></option>
                         <option id="intervalAggr2" value="max"></option>
-                        <option id="intervalAggr3" value="sum"></option>
+                        <option selected id="intervalAggr3" value="sum"></option>
                         <option id="intervalAggr4" value="avg"></option>
                       </select>
                     </div>                  	
@@ -376,7 +336,7 @@
                         <option id="aggr1" value="min"></option>
                         <option id="aggr2" value="max"></option>
                         <option id="aggr3" value="sum"></option>
-                        <option id="aggr4" value="avg"></option>
+                        <option selected id="aggr4" value="avg"></option>
                       </select>
                   </div>
                     
