@@ -160,7 +160,7 @@ public class Forecast {
 				String command = "java -jar ComputeBaseline.jar -z " + frcHorizon + " -e " + excludeFile +
 						" ISONE " + energyFile + " " + startDateStr;
 				Process proc = Runtime.getRuntime().exec(command);
-				proc.waitFor();
+				//proc.waitFor();
 				BufferedReader buf = new BufferedReader(new InputStreamReader(proc.getInputStream()));
 				/* testing system
 				String line;
