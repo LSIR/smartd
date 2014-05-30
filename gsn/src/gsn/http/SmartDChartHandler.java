@@ -123,7 +123,7 @@ public class SmartDChartHandler implements RequestHandler {
 					// retrieve all of the meter ids and save them in users
 					// array list
 					rs = stm.executeQuery("select distinct METER_ID from " + electricDataTable);
-
+						
 					while (rs.next()) {
 
 						users.add(rs.getString("METER_ID"));
@@ -246,13 +246,8 @@ public class SmartDChartHandler implements RequestHandler {
 	
         }
                 
-       
         sb.append("</result>");                 
-        /*..
-        for (int i=0; i<resultTimingFrc.length; i++) {
-        	logger.warn(resultTimingFrc[i]);
-        }
-        */
+
         response.setHeader("Cache-Control", "no-store");
         response.setDateHeader("Expires", 0);
         response.setHeader("Pragma", "no-cache");
@@ -334,7 +329,7 @@ public class SmartDChartHandler implements RequestHandler {
         String[] resultTiming = null;
     	double[] resultValue = null;
 
-    	//TODO: this code could be shortened using the aggregation facility from the database  
+    	//TODO: this code could be shortened using the aggregation facility from mysql  
     	for(int id=0; id<parseIDs.length ;id++){
         	
         	resultValueIndex = 0;
@@ -355,9 +350,9 @@ public class SmartDChartHandler implements RequestHandler {
     		}
         	
         	if(id==0){
-        		
-        		 rs = stm.executeQuery("select * from " + electricDataTable + " where " + vsCondition );                
-
+        		 String query = "select * from " + electricDataTable + " where " + vsCondition ;
+        		 rs = stm.executeQuery( query );
+        		 logger.warn(query);
                  while (rs.next()) {              	
                  	
                  	resultNum++;                
@@ -393,8 +388,9 @@ public class SmartDChartHandler implements RequestHandler {
                  }
         	
         	}
-        	
-        	rs = stm.executeQuery("select * from " + electricDataTable + " where " + vsCondition + " order by timestamp ASC" );                
+        	String query = "select * from " + electricDataTable + " where " + vsCondition + " order by timestamp ASC";
+        	rs = stm.executeQuery( query );   
+        	logger.warn( query );
             int counterDateTime = 1;
             int counterValue = 1;
 
@@ -404,9 +400,9 @@ public class SmartDChartHandler implements RequestHandler {
 
 						Date dt = new Date(rs.getLong("TIMESTAMP") * 1000);
 						if (vsInterval.equals("30")) {
-							resultTiming[resultTimingIndex] = formatter.format(dt); // this has to be moved outside?
-							resultTimingIndex++; // this has to be moved outside?
-							counterDateTime = 0; // this has to be moved outside?
+							resultTiming[resultTimingIndex] = formatter.format(dt); 
+							resultTimingIndex++; 
+							counterDateTime = 0; 
 						}
 
 						else if (vsInterval.equals("hour")
