@@ -56,3 +56,9 @@ SmartD can be reached at:
 web site : http://localhost:22001/SmartDindex.html
 
 
+2014.05.30
+==========
+To be able to run the forecasting capability as in the demo, see the README in
+../../smartd-forecasting/README
+
+
