@@ -171,30 +171,27 @@ public class SmartDValueDistribution implements RequestHandler {
             if(bin.equals("binSize")){
         		
             	sizeOfBin = Double.valueOf(binInput);
-        		groupBy = " group by VALUE div "+ sizeOfBin;
-        		
-        		
+        		//groupBy = " group by VALUE div "+ sizeOfBin;       		
         	}
         	
         	else if(bin.equals("binNum")){
         		
         		double max = 0;
-        		rs = stm.executeQuery("select max(VALUE) as maximum from " + electricDataTable + " where " + meterID + "=METER_ID");
-
+        		String query = "select max(VALUE) as maximum from " + electricDataTable + " where " + condition;
+        		logger.warn( query );
+        		rs = stm.executeQuery(query);
 				while (rs.next()) {
 					max = rs.getFloat("maximum");
 				}
 				double numOfBin = Double.valueOf(binInput);
 				sizeOfBin = max/numOfBin;
-				
-				sizeOfBin = Math.round(sizeOfBin * Math.pow(10,1))/Math.pow(10,1);
-				
-				groupBy = " group by VALUE div "+ sizeOfBin;        		
+				sizeOfBin = Math.ceil( sizeOfBin * 10 ) / 10;
+				//groupBy = " group by VALUE div "+ sizeOfBin;        		
         	}
-            
-           
-            rs = stm.executeQuery("select count(*) from " + electricDataTable + " where " + condition);
-            
+            groupBy = " group by floor( VALUE/"+ sizeOfBin + " )";
+            String query = "select count(*) from " + electricDataTable + " where " + condition;
+            logger.warn( query );
+            rs = stm.executeQuery( query );
             int resultNum = 0 ;
 			while (rs.next()) {
 				
@@ -208,9 +205,10 @@ public class SmartDValueDistribution implements RequestHandler {
 			int floatingPointNum = floatingPoints.length();
 			
 			double binPlot = 0.0;
-			
-            rs = stm.executeQuery("select VALUE , count(VALUE) from " + electricDataTable + " where " + condition + groupBy);
 
+			query = "select VALUE , count(VALUE) from " + electricDataTable + " where " + condition + groupBy;
+            logger.warn(query);
+            rs = stm.executeQuery(query);
             sb = new StringBuilder("<result>\n");
             
 			while (rs.next()) {
@@ -233,6 +231,7 @@ public class SmartDValueDistribution implements RequestHandler {
 			}
 			
 			sb.append("</result>"); 
+			//..logger.warn( sb.toString() );
             
             
         } catch (SQLException ex) {
