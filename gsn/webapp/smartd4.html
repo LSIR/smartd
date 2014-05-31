@@ -97,64 +97,65 @@
 			var xAxisLabel = [];
 		
 		
-		$.ajax({
+			$.ajax({
 						
-		  	type: "GET",	
-		  	url:"/gsn?REQUEST=124&id="+userID+"&startTime="+startTime+"&endTime="+endTime+"&bin="+bin+"&binInput="+binInput,	
-		  	dataType: "xml",
-		  	success:function(xml){		  	
+		  		type: "GET",	
+		  		url:"/gsn?REQUEST=124&id="+userID+"&startTime="+startTime+"&endTime="+endTime+"&bin="+bin+"&binInput="+binInput,	
+		  		dataType: "xml",
+		  		success:function(xml){		  	
 		  	
-		  		var bin = "";
-		  		var count = "";	
+		  			var bin = "";
+		  			var count = "";	
 		  		
-		  		$(xml).find('stream-element').each(function(){
+		  			$(xml).find('stream-element').each(function(){
+		  					  					  				
+		  				bin = $(this).find('field[name="bin"]').text();
+		  				count = $(this).find('field[name="count"]').text();			  			
+		  				line.push([  bin , count ]);
+		  				xAxisLabel.push([ bin ]);
 		  			
-		  					  				
-		  			bin = $(this).find('field[name="bin"]').text();
-		  			count = $(this).find('field[name="count"]').text();			  			
-		  			line.push([  bin , count ]);
-		  			xAxisLabel.push([ bin , bin ]);
+		  				if(binIn==1)
+		  					binSize = parseFloat(bin);
+		  				binIn++;
 		  			
-		  			if(binIn==1)
-		  				binSize = parseFloat(bin);
-		  			binIn++;
+		  				//alert(bin+"    "+count);
 		  			
-		  			//alert(bin+"    "+count);
-		  			
-		  		});
+		  			});
 		  		
-		  		var JSONObject= {		  				
-		  				"label": userID,
-		  				"data": line
+		  			var JSONObject= {		  				
+		  					label: userID,
+		  					data: line,
+		  					bars: {
+		  						show: true,
+		  						barWidth:binSize
+		  					}
 		  				};
 		  		
-		  		datasets.push(JSONObject);	
+		  			datasets.push(JSONObject);	
 		  		
-		  		//alert(binSize);		  	
-		  			  		
-		  		if (ids==parseIDs.length){
-		  		 
-		  		
-		  				var options = {				  				
+		  			//alert(binSize);		  	
+		  			//alert(xAxisLabel)  		
+		  			if (ids==parseIDs.length){
+		  		 		var options = {				  				
 				  				yaxis: { color: "white"},				  				
 				  				xaxis: { color: "white",ticks: xAxisLabel},
 				  				legend:{      				  		            
 				  		            container: $("#chartLegend"),
 				  		            noColumns: ids
 				  		        },
-				  		        series: { bars: { show: true, barWidth: binSize}, stack: true}				  				
+				  		        //series: { stack: true}				  				
 				  		};	
 		  				
 		  				$.unblockUI();
 		  				$.plot($("#placeholder"), datasets, options);
 		  		
 		  			}
-		  		else{
-		  			displayBars(ids);
+		  			else
+		  			{
+		  				displayBars(ids);
 		  			}
 		  		
-		  		}
-		    
+		  		}		    
 		     
 		}); 			
 			
