@@ -5,7 +5,8 @@ It is a smart meter data analytics dashboard, developed on top of [GSN](http://s
 This project was first developed by [Aylin](http://people.epfl.ch/aylin.jarrahnezhad).
 
 SmartD has been accepted as a demo at [e-Energy 2014](http://conferences.sigcomm.org/eenergy/2014/)!<br>
-SmartD demonstration video is available [here](http://www.youtube.com/watch?v=qK3PzYeZC9s). The complete paper is available [here](http://infoscience.epfl.ch/record/198302?ln=en)
+SmartD demonstration video is available [here](http://www.youtube.com/watch?v=fxbfif2X0U8&list=PLDpHnuPxgkCs2s9aOPphKNOhrDQldTbRV
+). The complete paper is available [here](http://infoscience.epfl.ch/record/198302?ln=en)
 
 To run the project, please see <code>gsn/SmartD/README.txt</code>
 
