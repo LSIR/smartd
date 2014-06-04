@@ -3,7 +3,7 @@
 # @date Thu 29 May 2014 12:44:20 PM CEST 
 #
 
-This code is useful to generate the forecast for SmartD
+This code is useful to generate the forecast for SmartD up to x days ahead (see below on how to set x)
 
 How to run
 ==========
@@ -18,6 +18,9 @@ This code:
 	- up to x days ahead, where x is the value of forecast-horizon in system.config
 
 2 puts the forecasting result in the electric_data_forecast table
+
+After you execute this code, then you can use SmartD to visualize the 
+forecasting up to x days ahead.
 
 Special Note
 ============
