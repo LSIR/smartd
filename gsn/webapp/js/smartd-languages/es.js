@@ -10,10 +10,10 @@ fourthVisualization:"Distribuci&oacute;n",
 firstControlPanel:"Medici&oacute;n de diferentes ID",
 thirdControlPanel:"Distribuci&oacute;n de los valores",
 
-startTime:"Hora de inicio",
-endTime:"Hora de fin",
+startTime:"D&iacute;a/hora de inicio",
+endTime:"D&iacute;a/hora de fin",
 
-interval:"Intervalo",
+interval:"Agregaci&oacute;n",
 everyThirtyMin:"cada 30 minutos",
 hourly:"cada hora",
 daily:"diario",
@@ -36,7 +36,7 @@ title2:"Rellena los valores",
 title3:"Evaluaci&oacute;n",
 
 weekDay:"D&iacute;as de la semana",
-sunday:"Somingo",
+sunday:"Domingo",
 monday:"Lunes",
 tuesday:"Martes",
 wednesday:"Mi&eacute;rcoles",
@@ -44,7 +44,7 @@ thursday:"Jueves",
 friday:"Viernes",
 saturday:"S&aacute;bado",
 weekdays:"d&iacute;as laborables",
-weekend:"fin de semana",
+weekend:"fines de semana",
 
 season:"Estaci&oacute;n",
 winter:"invierno (Dic-Feb)",
@@ -62,8 +62,8 @@ EvaluationOfkQuestions:"Evaluaci&oacute;n de las preguntas (k)",
 neighborNum:"N&uacute;mero de vecinos",
 questionNum:"N&uacute;mero de preguntas",
 
-bin:"Intevalo ",
-binNum:"n&uacute;mero de intevalos",
+bin:"Intervalo ",
+binNum:"n&uacute;mero de intervalos",
 binSize:"dimensi&oacute;n del intervalo"
 }
 

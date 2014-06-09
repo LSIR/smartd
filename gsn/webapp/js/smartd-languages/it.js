@@ -10,10 +10,10 @@ fourthVisualization:"Distribuzione",
 firstControlPanel:"Misurazione degli ID",
 thirdControlPanel:"Distribuzione dei valori",
 
-startTime:"Inizio",
-endTime:"Fine",
+startTime:"Giorna/ora d'inizio",
+endTime:"Giorno/ora di fine",
 
-interval:"Intervallo",
+interval:"Aggregazione",
 everyThirtyMin:"ogni 30 minuti",
 hourly:"ogni ora",
 daily:"ogni giorno",
@@ -44,7 +44,7 @@ thursday:"Giovedi",
 friday:"Venerdì",
 saturday:"Sabato",
 weekdays:"giorni feriali",
-weekend:"weekend",
+weekend:"fine setimana",
 
 season:"Stagione",
 winter:"inverno (Dic-Feb)",
@@ -64,6 +64,6 @@ questionNum:"Numero di domande",
 
 bin:"Intervallo",
 binNum:"numero di intervalli",
-binSize:"dimension dell'intervallo "
+binSize:"dimensione dell'intervallo "
 }
 
