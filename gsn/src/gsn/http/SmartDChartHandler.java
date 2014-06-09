@@ -180,11 +180,14 @@ public class SmartDChartHandler implements RequestHandler {
     		String timeConditionFrc = "TIMESTAMP >= " + startTime + " and TIMESTAMP <= " + endTime;
     		//..logger.warn(timeConditionFrc);
     		String electricDataTableFrc = electricDataTable + "_forecast";
-    		ArrayList<Object> resultDataFrc = getData(parseIDs, vsInterval, vsAggregation, vsIntervalAggregation, vsNormalization, timeConditionFrc, electricDataTableFrc, stm, rs);   
-    		resultTimingFrc = (String[]) resultDataFrc.get(0);
-    		resultValueFrc = (double[]) resultDataFrc.get(1);
+    		ArrayList<Object> resultDataFrc = getData(parseIDs, vsInterval, vsAggregation, vsIntervalAggregation, vsNormalization, timeConditionFrc, electricDataTableFrc, stm, rs);
+    		if (resultDataFrc==null) {
+    			frcFlag=false;
+    		} else {
+    			resultTimingFrc = (String[]) resultDataFrc.get(0);
+    			resultValueFrc = (double[]) resultDataFrc.get(1);
+    		}
     	}
-    	
     	
         /* 
         String st = "";
@@ -194,8 +197,6 @@ public class SmartDChartHandler implements RequestHandler {
         System.out.println(st);
         */
                 
-        
-    	
         //----------------------------------result as XML------------------------------------------
         
         sb = new StringBuilder("<result>\n");
@@ -350,42 +351,33 @@ public class SmartDChartHandler implements RequestHandler {
     		}
         	
         	if(id==0){
-        		 String query = "select * from " + electricDataTable + " where " + vsCondition ;
-        		 rs = stm.executeQuery( query );
-        		 logger.warn(query);
-                 while (rs.next()) {              	
-                 	
-                 	resultNum++;                
-                 }        	
+        		String query = "select * from " + electricDataTable + " where " + vsCondition ;
+        		rs = stm.executeQuery( query );
+        		logger.warn(query);
+                while (rs.next()) {              	
+                	resultNum++;                
+                }        	
                  
-                 if (vsInterval.equals("30")) {
+                if (vsInterval.equals("30")) {
 						
-					}
-
-					else if (vsInterval.equals("hour")) {
-						resultNum = resultNum / 2 + 1;
-					}
-
-					else if (vsInterval.equals("day")) {
-						
-						resultNum = resultNum / (2*24) + 1;
-					}
-
-					else if (vsInterval.equals("week")) {
-						resultNum = resultNum / (2*24*7) + 1;
-
-					}
-
-					else if (vsInterval.equals("month")) {
-						resultNum = resultNum / (2*24*7*4) + 1;
-
-					}
+				}
+				else if (vsInterval.equals("hour")) {
+					resultNum = (int) Math.ceil(resultNum / 2);
+				}
+				else if (vsInterval.equals("day")) {
+					resultNum = (int) Math.ceil( resultNum / (2*24) );
+				}
+				else if (vsInterval.equals("week")) {
+					resultNum = (int) Math.ceil( resultNum / (2*24*7) );
+				}
+				else if (vsInterval.equals("month")) {
+					resultNum = (int) Math.ceil( resultNum / (2*24*7*4) );
+				}
                  
-                 if(resultNum>0){
-            	
-                	 resultTiming = new String[resultNum];
-                	 resultValue = new double[resultNum];
-                 }
+                if(resultNum>0){
+                	resultTiming = new String[resultNum];
+                	resultValue = new double[resultNum];
+                }
         	
         	}
         	String query = "select * from " + electricDataTable + " where " + vsCondition + " order by timestamp ASC";
@@ -916,7 +908,9 @@ public class SmartDChartHandler implements RequestHandler {
         	
         }
 
-    	ArrayList<Object> result = new ArrayList<Object>();
+        if (resultTiming==null) return null;
+        
+        ArrayList<Object> result = new ArrayList<Object>();
     	result.add(resultTiming);
     	result.add(resultValue);
     	
