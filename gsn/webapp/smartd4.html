@@ -22,14 +22,24 @@
 	<script type="text/javascript">
 	$(document).ready(function(){
 	
-		
-		
 		$.plot($("#placeholder"), [[]]);
 		
 	// On the first load check the language cookie
-	var clang = getCookie("clang")
+	var clang = getCookie("clang");
 	if ( clang=="fr" ) {
 		$.getScript('js/smartd-languages/fr.js', loadLanguage);				
+	} else 
+	if ( clang=="id" ) {
+		$.getScript('js/smartd-languages/id.js', loadLanguage);				
+	} else 
+	if ( clang=="es" ) {
+		$.getScript('js/smartd-languages/es.js', loadLanguage);				
+	} else 
+	if ( clang=="it" ) {
+		$.getScript('js/smartd-languages/it.js', loadLanguage);				
+	} else 
+	if ( clang=="de" ) {
+		$.getScript('js/smartd-languages/de.js', loadLanguage);				
 	} else {
 		$.getScript('js/smartd-languages/en.js', loadLanguage);		
 	}
@@ -175,12 +185,29 @@
 		setCookie("clang", "en");
 	});
 	
-	//Selected language = French	
+	// Selected language = French, Indonesian, Spanish, Italian, German	
+	// (note: other language can be added by specifying another .js for the language
+	// and create another function similar to this function below)  
 	$("#french").click(function(){
-		$.getScript('js/smartd-languages/fr.js', loadLanguage);	
+		$.getScript('js/smartd-languages/fr.js', loadLanguage);
 		setCookie("clang", "fr");
 	});
-	
+  	$("#indonesian").click(function(){
+		$.getScript('js/smartd-languages/id.js', loadLanguage);
+		setCookie("clang", "id");
+	});	
+  	$("#spanish").click(function(){
+		$.getScript('js/smartd-languages/es.js', loadLanguage);
+		setCookie("clang", "es");
+	});
+  	$("#italian").click(function(){
+		$.getScript('js/smartd-languages/it.js', loadLanguage);
+		setCookie("clang", "it");
+	});
+  	$("#german").click(function(){
+		$.getScript('js/smartd-languages/de.js', loadLanguage);
+		setCookie("clang", "de");
+	});
 	
 	
 	
@@ -209,8 +236,12 @@
 			</ul>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a id="english" href="#">en</a></li>				
-				<li><a id="french" href="#">fr</a></li>
+				<li><a id="german" href="#">DE</a></li>
+				<li><a id="english" href="#">EN</a></li>
+				<li><a id="spanish" href="#">ES</a></li>
+				<li><a id="french" href="#">FR</a></li>
+				<li><a id="indonesian" href="#">ID</a></li>
+				<li><a id="italian" href="#">IT</a></li>
 			</ul>
 		</div>
 		<!-- /.nav-collapse -->

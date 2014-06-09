@@ -1,5 +1,5 @@
 
-// Language : English
+// Language : French
 
 var lang = {
 

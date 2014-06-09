@@ -1,4 +1,3 @@
-
 // Language : English
 
 var lang = {
@@ -66,30 +65,5 @@ questionNum : "Number of questions",
 bin: "Bin input",
 binNum : "number of bins",
 binSize : "bin size"
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }
+
