@@ -14,10 +14,10 @@ startTime:"Startzeit",
 endTime:"Endzeit",
 
 interval:"Intervall",
-everyThirtyMin:"halbstündlich",
-hourly:"stündlich",
-daily:"täglich",
-weekly:"wöchentlich",
+everyThirtyMin:"halbst&uuml;ndlich",
+hourly:"st&uuml;ndlich",
+daily:"t&uuml;glich",
+weekly:"w&uuml;chentlich",
 monthly:"monatlich",
 
 min:"min",
@@ -63,7 +63,8 @@ neighborNum:"Anzahl der Nachbarn",
 questionNum:"Anzahl der Fragen",
 
 bin:"Bin Konfiguration",
-binNum:"Anzahl der Bins",
-binSize:"Größe der Bins"
+binNum:"Bin-Anzahl",
+binSize:"Bin-Gr&ouml;&szlig;e"
 }
+ 
 
