@@ -25,7 +25,7 @@ max:"maks",
 sum:"jumlah",
 avg:"rata-rata",
 
-normalization:"Nilai ternormalisasi",
+normalization:"Normalisasi",
 id:"ID",
 displayPlot:"Tampilkan",
 savePlot:"Simpan",

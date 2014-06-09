@@ -35,7 +35,7 @@ title1 : "Select attributes",
 title2 : "Fill the values",
 title3 : "Evaluation",
 
-weekDay : "Weekday",
+weekDay : "Day of the week",
 sunday : "Sunday",
 monday : "Monday",
 tuesday : "Tuesday",
