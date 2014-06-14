@@ -1,4 +1,3 @@
-
 // Language : French
 
 var lang = {
@@ -11,15 +10,15 @@ fourthVisualization : "Distribution",
 firstControlPanel : "Mesure de différents ID",
 thirdControlPanel : "Distribution des valeurs",
 
-startTime : "l'heure de début",
-endTime : "l'heure de fin",
+startTime : "Jour/heure de début",
+endTime : "Jour/heure de fin",
 
 interval : "Intervalle",
 everyThirtyMin : "toutes les 30 minutes",
-hourly : "horaire",
-daily : "tous les jours",
-weekly : "hebdomadaire",
-monthly : "mensuel",
+hourly : "par heure",
+daily : "par jour",
+weekly : "par semaine",
+monthly : "par mois",
 
 min : "min",
 max : "max",
@@ -30,7 +29,7 @@ normalization: "Valeurs normalisées",
 id: "ID",
 displayPlot : "Affichage",
 savePlot : "Enregistrer",
-loadPlot : "Load",
+loadPlot : "Télécharger",
 
 title1 : "Choisissez attributs",
 title2 : "Remplissez les valeurs",
@@ -44,28 +43,27 @@ wednesday : "Mercredi",
 thursday : "Jeudi",
 friday : "Vendredi",
 saturday: "Samedi",
-weekdays : "semaine",
+weekdays : "jours de la semaine",
 weekend : "week-end",
 
-season : "Season",
-winter : " l'hiver (Dec-Feb)",
-spring : "printemps (Mar-May)",
-summer : "l'été (Jun-Aug)",
-autumn : "l'automne (Sep-Nov)",
+season : "Saison",
+winter : "hiver (déc.-fév.)",
+spring : "printemps (mars-mai)",
+summer : "été (juin-août)",
+autumn : "automne (sept.-nov.)",
 
 all : "tous",
 
-refreshPlot : "Ne pas actualiser le terrain",
+refreshPlot : "Ne pas actualiser le graphique",
 
 EvaluationOfnNeighbors : "Évaluation des n voisins",
-EvaluationOfkQuestions : "l'évaluation des questions de k",
+EvaluationOfkQuestions : "Évaluation des k questions",
 
 neighborNum : "Nombre de voisins",
 questionNum : "Nombre de questions",
 
-bin: "entrée bin",
-binNum : "nombre de poubelles",
-binSize : "la taille de la poubelle"	
-	
-
+bin: "Intervalles",
+binNum : "nombre des intervalles",
+binSize : "amplitude des intervalles"
 }
+

@@ -13,7 +13,7 @@ thirdControlPanel : "Distribution of the values",
 startTime : "Start Time",
 endTime : "End Time",
 
-interval : "Interval",
+interval : "Temporal aggregation",
 everyThirtyMin : "every 30 minutes",
 hourly : "hourly",
 daily : "daily",

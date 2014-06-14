@@ -56,8 +56,8 @@ all:"alle",
 
 refreshPlot:"Plot nicht aktualisieren",
 
-EvaluationOfnNeighbors:"Auswertung für n Nachbarn",
-EvaluationOfkQuestions:"Auswertung für k Fragen",
+EvaluationOfnNeighbors:"Auswertung f&uuml;r n Nachbarn",
+EvaluationOfkQuestions:"Auswertung f&uuml;r k Fragen",
 
 neighborNum:"Anzahl der Nachbarn",
 questionNum:"Anzahl der Fragen",
